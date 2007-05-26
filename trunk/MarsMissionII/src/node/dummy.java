@@ -6,18 +6,23 @@ package node;
  * Dummy zum Testen von Funktionen
  */
 
+import communication.Communication;
+import communication.Connect;
+
 import message.Message;
 import message.Queue;
 import base.Utilities;
 
 
-public class dummy {
+public class dummy extends Connect {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		System.out.println();
+		
 		System.out.println("generate new message.");
 		Message message = new Message();
 		Queue queue = new Queue();

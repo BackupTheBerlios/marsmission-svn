@@ -1,5 +1,14 @@
 package base;
 
+import net.jxta.discovery.DiscoveryService;
+import net.jxta.peergroup.PeerGroup;
+import net.jxta.pipe.InputPipe;
+import net.jxta.pipe.OutputPipe;
+import net.jxta.pipe.PipeService;
+import net.jxta.platform.NetworkConfigurator;
+import net.jxta.platform.NetworkManager;
+import net.jxta.protocol.PipeAdvertisement;
+
 /**
  * 
  * @author Torsten Burschka
@@ -8,49 +17,73 @@ package base;
 
 public class Configuration {
 
-	private String project = "MarsMissionII";
+	/**
+	 * Project name
+	 */
+	protected String project = "MarsMissionII";
 	
-	private String nodeName = "Node";
+	/**
+	 * Node name 
+	 */
+	protected String nodeName = "Node";
 	
-	private String nodePath = "."+project+"_";
+	/**
+	 * Node principal
+	 */
+	protected String principal = nodeName;
 	
-	private String peerGroup = project;
+	/**
+	 * Node password
+	 */
+	protected String password = "mars2007";
 	
-	private String principal = nodeName;
+	protected static String rendezvousFile = "rdv.lst";
 	
-	private String password = "mars2007";
+	protected static String relayFile = "rly.lst";
 	
-	private static String rendezvousFile = "rdv.lst";
-	
-	private static String relayFile = "rly.lst";
-	
-	private static String messageFile = "messages.xml";
-	
-	public static String getMessageFileName() {
-		return messageFile;
-	}
+	/**
+	 * PeerGroup
+	 */
+	protected PeerGroup netPeerGroup = null;
 
-	public String getNodeName() {
-		return nodeName;
-	}
+	/**
+	 * Stores the configuration
+	 */
+	protected NetworkConfigurator configuration = null;
 
-	public void setNodeName(String nodeName) {
-		this.nodeName = nodeName;
-	}
+	/**
+	 * Pipe Advertisement
+	 */
+	protected PipeAdvertisement pipeAdv = null;
+	
+	/**
+	 * Pipe Service
+	 */
+	protected PipeService pipeServ = null;
+	
+	/**
+	 * Discovery Service
+	 */
+	protected DiscoveryService discServ = null;
+	
+	/**
+	 * NetworkManager
+	 */
+	protected NetworkManager manager; 
+	
+	/**
+	 * Input pipe
+	 */
+	protected InputPipe inputPipe = null;
+	
+	/**
+	 * Output pipe
+	 */
+	protected OutputPipe outputPipe = null;
 
-	public String getPeerGroup() {
-		return peerGroup;
-	}
+	/**
+	 * Message container for outgoing messages
+	 */
+	protected net.jxta.endpoint.Message message_out = null;
 
-	public void setPeerGroup(String peerGroup) {
-		this.peerGroup = peerGroup;
-	}
-
-	public String getRendezvousFile() {
-		return rendezvousFile;
-	}
-
-	public String getRelayFile() {
-		return relayFile;
-	}	
 }
