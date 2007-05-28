@@ -86,4 +86,20 @@ public class Configuration {
 	 */
 	protected net.jxta.endpoint.Message message_out = null;
 
+	/**
+	 * Time to wait for a rendezvous connection in msec
+	 */
+	protected long waitTime = 10000;	
+	
+	public void Configuration (String nodeName) {
+		this.nodeName = nodeName;
+		System.setProperty("JXTA_HOME","."+this.project+"_"+this.nodeName);
+		this.configuration = new NetworkConfigurator();
+		if (!configuration.exists()) {
+			this.createConfig();
+		} else {
+			System.out.println(nodeName+": Configuration found.");
+			rendezvousList.addRendezvous(rendezvousList.getHostAdresses("tcp", 9701));
+		}
+	}
 }

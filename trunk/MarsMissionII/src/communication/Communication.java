@@ -14,8 +14,5 @@ public class Communication extends Configuration {
 		public void rendezvousEvent(RendezvousEvent arg0) {}
 	}
 
-	public void blubb () {
-		outputPipe = null;
-	}
-	
+
 }
