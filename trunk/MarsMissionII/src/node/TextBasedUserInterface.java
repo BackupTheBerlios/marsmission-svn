@@ -33,6 +33,8 @@ public class TextBasedUserInterface {
 	public void send () {
 		try {
 		System.out.println("\n"+this.nodeName+": Sende-System:");
+		System.out.println("\n"+this.nodeName+": Gruppe:");
+		this..msg.setGruppe(this.stdin.readLine());
 		System.out.print("\n"+this.nodeName+": Empfaenger: ");
 		this.msg.setSender(this.stdin.readLine());
 		System.out.print("\n"+this.nodeName+": Nachicht: ");
@@ -43,8 +45,14 @@ public class TextBasedUserInterface {
 		
 		System.out.println("\nNachicht:");
 		System.out.println("Sender:     "+this.msg.getSender());
+<<<<<<< .mine
+		System.out.println("Gruppe: "+this.msg.getGruppe());
+		System.out.println("Empfaenger: "+this.msg.getReciever());
+		System.out.println("Nachicht:   "+this.msg.getInformation()+"\n");
+=======
 		System.out.println("Empfaenger: "+this.msg.getReceiver());
 		System.out.println("Nachicht:   "+this.msg.getData()+"\n");
+>>>>>>> .r7
 		try {
 			this.com.openOutputPipe(this.msg.getReceiver());
 			this.com.sendMessage(msg);
@@ -72,6 +80,7 @@ public class TextBasedUserInterface {
 			this.msg.setTimestamp("20070516");
 			this.msg.setMessageType(1);
 			this.msg.setReciever(nodeName);
+			this.msg.setGruppe(Gruppe);
 			this.msg.setInformation("Message myself!");
 			this.msg = msg.FromFile(com.getNodePath()+fileName);
 		} catch (IOException ioe) {
@@ -128,43 +137,51 @@ public class TextBasedUserInterface {
 	}
 	
 	public void menue ()  {
-		String tmp;
-		int ui, ende;
-		ui = 0;
-		ende =0;
-		System.out.println("Willkommen zum Kommunikationssystem Mars Mission \n");
-		this.connect();
-		while (ende <1) {
-			if (ui == 0){
-				try {
-					System.out.println("1. Einzelnachrichten senden \n" + "2. Nachricht aus Datei versenden \n" + "3. Nachrichten ansehen \n" + "4. Beenden\n");
-					tmp = stdin.readLine();
-					ui = (int) tmp.charAt(0);
-					ui = ui - 48;
-			}
-				catch (IOException ioe) {
-					System.err.println("Fehler beim Einlesen der Menukontrollzahl");
+		try {
+			String tmp;
+			int ende, ui;
+			ui = 0;
+			ende =0;
+			System.out.println("Willkommen zum Kommunikationssystem Mars Mission \n");
+			this.connect();
+			while (ende <1) {
+				if (ui == 0){
+					try {
+						System.out.println("1. Einzelnachrichten senden \n" + "2. Nachricht aus Datei versenden \n" + "3. Nachrichten ansehen \n" + "4. Beenden\n");
+						tmp = stdin.readLine();
+						ui = (int) tmp.charAt(0);
+						ui = ui - 48;
+					}
+					catch (IOException ioe) {
+						System.err.println("Fehler beim Einlesen der Menukontrollzahl");
+					}
+				}
+				else if (ui == 1){
+					this.send();
+					ui = 0;				
+				}
+				else if (ui ==2){
+					this.sendFromFile();
+					ui = 0;
+				}
+				else if (ui ==3){
+					this.showInMessages();
+					ui = 0;
+				}
+				else if (ui == 4) {
+					this.disconnect();
+					ende = 1;
+				}
+				else {
+					ui = 0;
 				}
 			}
-			else if (ui == 1){
-				this.send();
-				ui = 0;				
-			}
-			else if (ui ==2){
-				this.sendFromFile();
-				ui = 0;
-			}
-			else if (ui ==3){
-				this.showInMessages();
-				ui = 0;
-			}
-			else if (ui == 4) {
-				this.disconnect();
-				ende = 1;
-			}
-			else {
-				ui = 0;
-			}
+		}
+		catch (Throwable ta) {
+			System.err.println("\n"+this.nodeName+": Fehler beim ausführen von Menuepunkten!");
+			System.err.println("\n"+this.nodeName+": Error Menue:");
+			ta.printStackTrace();
+			System.err.println();
 		}
 	}
 	
