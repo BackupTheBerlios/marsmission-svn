@@ -48,17 +48,17 @@ public class Message {
 	/**
 	 * Message data type
 	 */
-	private static String data_type = "data";
+	public static String data_type = "data";
 
 	/**
 	 * Message text type
 	 */
-	private static String text_type = "text";
+	public static String text_type = "text";
 
 	/**
 	 * Message command type
 	 */
-	private static String command_type = "command";
+	public static String command_type = "command";
 	
 	/**
 	 * Constructor - create a new message with default values
