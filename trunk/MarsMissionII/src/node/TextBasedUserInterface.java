@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import message.Message;
+
 /**
  * 
  */
@@ -29,27 +31,22 @@ public class TextBasedUserInterface {
 	}
 	
 	public void send () {
-		this.msg.setTimestamp("20070516");
-		this.msg.setMessageType(1);
-		this.msg.setReciever(this.nodeName);
-		this.msg.setSender(this.nodeName);
-		this.msg.setInformation("Message myself!");
 		try {
 		System.out.println("\n"+this.nodeName+": Sende-System:");
 		System.out.print("\n"+this.nodeName+": Empfaenger: ");
-		this.msg.setReciever(this.stdin.readLine());
+		this.msg.setSender(this.stdin.readLine());
 		System.out.print("\n"+this.nodeName+": Nachicht: ");
-		this.msg.setInformation(this.stdin.readLine());
+		this.msg.setData(this.stdin.readLine());
 		} catch (IOException ioe) {
 			System.err.println("\n"+this.nodeName+": Fehler bei der Eingabe!");
 		}
 		
 		System.out.println("\nNachicht:");
 		System.out.println("Sender:     "+this.msg.getSender());
-		System.out.println("Empfaenger: "+this.msg.getReciever());
-		System.out.println("Nachicht:   "+this.msg.getInformation()+"\n");
+		System.out.println("Empfaenger: "+this.msg.getReceiver());
+		System.out.println("Nachicht:   "+this.msg.getData()+"\n");
 		try {
-			this.com.openOutputPipe(this.msg.getReciever());
+			this.com.openOutputPipe(this.msg.getReceiver());
 			this.com.sendMessage(msg);
 			this.com.closeOutputPipe();
 			System.out.println("\n"+this.nodeName+": Nachicht erfolgreich gesendet!");
