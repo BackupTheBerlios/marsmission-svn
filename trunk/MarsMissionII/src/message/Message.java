@@ -6,8 +6,9 @@ import java.util.Date;
  * Class for create, modify and read out of messages
  * 
  * @author Torsten Burschka
- * @version 1.0
+ * @author Steffen Boettcher
  */
+
 public class Message {
 
 	/**

@@ -19,7 +19,7 @@ public class DatabaseServer {
 	 * create database for messages
 	 *
 	 */
-	public static void createDatabase() {
+	public static void connect() {
 		try {
 			Class.forName( "org.hsqldb.jdbcDriver" );
 		} catch (ClassNotFoundException e) {
@@ -120,7 +120,7 @@ public class DatabaseServer {
 						   "'" + mess.getReceiverGroup() + "', " +
 						   "'" + mess.getSender() + "', " +
 						   "'" + mess.getSenderGroup() + "', " +
-						   "'" + mess.getTimeStap().getSeconds() + "', " +
+						   "'" + mess.getTimeStap() + "', " +
 						   "'" + mess.getData() + "', " +
 						   "'" + mess.getType() + "' )";
 			
@@ -189,7 +189,7 @@ public class DatabaseServer {
 	}
 	
 	public static void main(String[] args) {
-		DatabaseServer.createDatabase();
+		DatabaseServer.connect();
 		Message tmp = new Message("Steffen", "Steffengroup", "Ellen", "Ellengroup",
 				Message.data_type, "Koche Kaffee!");
 		DatabaseServer.insertMessage(tmp);
