@@ -246,37 +246,35 @@ public class Message {
 		this.message_timeStamp = timeStamp;
 	}
 	
-	public static long hashMessage (String sender, String sender_group, String receiver, String receiver_group, String type, Date timeStamp, String data) {
-		int ui;
-		ui = 0;
-		String tmp;
-		tmp = sender;
-		ui = (int) tmp.charAt(0);
-		tmp = sender_group;
-		ui = ui + (int) tmp.charAt(0);
-		tmp = receiver;
-		ui = ui + (int) tmp.charAt(0);
-		tmp = receiver_group;
-		ui = ui + (int) tmp.charAt(0);
-		tmp = type;
-		ui = ui + (int) tmp.charAt(0);
-		tmp = data;
-		ui = ui + (int) tmp.charAt(0);
-		long hash = ui;
+	public static long hashMessage (Message message) {
+		long hash = message.getTimeStap().getTime();
+		for (int i=0; i <= message.getData().length(); i++)
+			hash = hash + (long)message.getData().charAt(i);
+		for (int i=0; i <= message.getReceiver().length(); i++)
+			hash = hash + (long)message.getReceiver().charAt(i);
+		for (int i=0; i <= message.getReceiverGroup().length(); i++)
+			hash = hash + (long)message.getReceiverGroup().charAt(i);
+		for (int i=0; i <= message.getSender().length(); i++)
+			hash = hash + (long)message.getSender().charAt(i);
+		for (int i=0; i <= message.getSenderGroup().length(); i++)
+			hash = hash + (long)message.getSenderGroup().charAt(i);
+		for (int i=0; i <= message.getType().length(); i++)
+			hash = hash + (long)message.getType().charAt(i);
 		return hash;
 	}
 	
 	public static Message createVerifietMessage (String sender, String sender_group, String receiver, String receiver_group, String type, Date timeStamp, String data, long hash) {
-		if (hashMessage(sender,sender_group,receiver,receiver_group,type,timeStamp,data) == hash) {
-			Message message = new Message();
-			message.setSender(sender);
-			message.setSenderGroup(sender_group);
-			message.setReceiver(receiver);
-			message.setReceiverGroup(receiver_group);
-			message.setType(type);
-			message.setTimeStamp(timeStamp);
-			message.setData(data);
+		Message message = new Message();
+		message.setSender(sender);
+		message.setSenderGroup(sender_group);
+		message.setReceiver(receiver);
+		message.setReceiverGroup(receiver_group);
+		message.setType(type);
+		message.setTimeStamp(timeStamp);
+		message.setData(data);
+		if (hashMessage(message) == hash)
 			return message;
-		} else return null;
+		else
+			return null;
 	}
 }
