@@ -61,7 +61,7 @@ public class DatabaseServer {
 					"message_sender varchar(50), " +
 					"sender_group varchar(50), " +
 					"message_timestamp BIGINT, " +
-					"message_data varchar(100), " +
+					"message_data varchar(255), " +
 					"message_type varchar(50) )";
 			
 			stmt.execute(query);
