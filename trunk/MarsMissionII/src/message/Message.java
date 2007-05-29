@@ -7,6 +7,7 @@ import java.util.Date;
  * 
  * @author Torsten Burschka
  * @author Steffen Boettcher
+ * @author Marian Zoellner
  */
 
 public class Message {
@@ -246,7 +247,22 @@ public class Message {
 	}
 	
 	public static long hashMessage (String sender, String sender_group, String receiver, String receiver_group, String type, Date timeStamp, String data) {
-		long hash = 0;
+		int ui;
+		ui = 0;
+		String tmp;
+		tmp = sender;
+		ui = (int) tmp.charAt(0);
+		tmp = sender_group;
+		ui = ui + (int) tmp.charAt(0);
+		tmp = receiver;
+		ui = ui + (int) tmp.charAt(0);
+		tmp = receiver_group;
+		ui = ui + (int) tmp.charAt(0);
+		tmp = type;
+		ui = ui + (int) tmp.charAt(0);
+		tmp = data;
+		ui = ui + (int) tmp.charAt(0);
+		long hash = ui;
 		return hash;
 	}
 	
