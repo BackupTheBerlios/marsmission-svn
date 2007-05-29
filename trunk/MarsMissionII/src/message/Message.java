@@ -127,8 +127,8 @@ public class Message {
 	 * @param message_sender
 	 *        the message sender
 	 */
-	public void setSender(String message_sender) {
-		this.message_sender = message_sender;
+	public void setSender(String sender) {
+		this.message_sender = sender;
 	}
 
 	/**
@@ -144,8 +144,8 @@ public class Message {
 	 * @param group
 	 *        the sender group
 	 */
-	public void setSenderGroup(String group) {
-		this.message_sender_group = group;
+	public void setSenderGroup(String sender_group) {
+		this.message_sender_group = sender_group;
 	}
 
 	/**
@@ -161,8 +161,8 @@ public class Message {
 	 * @param message_receiver
 	 *        the message receiver
 	 */
-	public void setReceiver(String message_receiver) {
-		this.message_receiver = message_receiver;
+	public void setReceiver(String receiver) {
+		this.message_receiver = receiver;
 	}
 
 	/**
@@ -178,8 +178,8 @@ public class Message {
 	 * @param group
 	 *        the receiver group
 	 */
-	public void setReceiverGroup(String group) {
-		this.message_receiver_group = group;
+	public void setReceiverGroup(String receiver_group) {
+		this.message_receiver_group = receiver_group;
 	}
 
 	/**
@@ -195,8 +195,8 @@ public class Message {
 	 * @param message_data
 	 *        the message data
 	 */
-	public void setData(String message_data) {
-		this.message_data = message_data;
+	public void setData(String data) {
+		this.message_data = data;
 	}
 
 	/**
@@ -213,8 +213,8 @@ public class Message {
 	 * @param message_type
 	 *        the message type
 	 */
-	public void setType(String message_type) {
-		this.message_type = message_type;
+	public void setType(String type) {
+		this.message_type = type;
 	}
 
 	/**
@@ -239,5 +239,28 @@ public class Message {
 	 */
 	public String commandType() {
 		return command_type;
+	}
+	
+	private void setTimeStamp (Date timeStamp) {
+		this.message_timeStamp = timeStamp;
+	}
+	
+	public static long hashMessage (String sender, String sender_group, String receiver, String receiver_group, String type, Date timeStamp, String data) {
+		long hash = 0;
+		return hash;
+	}
+	
+	public static Message createVerifietMessage (String sender, String sender_group, String receiver, String receiver_group, String type, Date timeStamp, String data, long hash) {
+		if (hashMessage(sender,sender_group,receiver,receiver_group,type,timeStamp,data) == hash) {
+			Message message = new Message();
+			message.setSender(sender);
+			message.setSenderGroup(sender_group);
+			message.setReceiver(receiver);
+			message.setReceiverGroup(receiver_group);
+			message.setType(type);
+			message.setTimeStamp(timeStamp);
+			message.setData(data);
+			return message;
+		} else return null;
 	}
 }
