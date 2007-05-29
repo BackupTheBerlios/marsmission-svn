@@ -33,10 +33,13 @@ public class TextBasedUserInterface {
 	public void send () {
 		try {
 		System.out.println("\n"+this.nodeName+": Sende-System:");
-		System.out.println("\n"+this.nodeName+": Gruppe:");
-		this..msg.setGruppe(this.stdin.readLine());
 		System.out.print("\n"+this.nodeName+": Empfaenger: ");
 		this.msg.setSender(this.stdin.readLine());
+		if (//Wenn Empfänger nicht in der gleichen Gruppe wie Sender)
+				{
+				System.out.println("\n"+this.nodeName+": Gruppe:");
+				this.msg.setReceiverGroup(this.stdin.readLine());
+				}
 		System.out.print("\n"+this.nodeName+": Nachicht: ");
 		this.msg.setData(this.stdin.readLine());
 		} catch (IOException ioe) {
@@ -44,15 +47,13 @@ public class TextBasedUserInterface {
 		}
 		
 		System.out.println("\nNachicht:");
-		System.out.println("Sender:     "+this.msg.getSender());
-<<<<<<< .mine
-		System.out.println("Gruppe: "+this.msg.getGruppe());
-		System.out.println("Empfaenger: "+this.msg.getReciever());
-		System.out.println("Nachicht:   "+this.msg.getInformation()+"\n");
-=======
-		System.out.println("Empfaenger: "+this.msg.getReceiver());
-		System.out.println("Nachicht:   "+this.msg.getData()+"\n");
->>>>>>> .r7
+		System.out.println("Sender:     		"+this.msg.getSender());
+		System.out.println("Gruppe:				"+this.msg.getGruppe());
+		System.out.println("Empfaenger: 		"+this.msg.getReciever());
+		System.out.println("Empaengergruppe:	"+this.msg.getReceiverGroup());
+		System.out.println("Nachicht:   		"+this.msg.getInformation()+"\n");
+		System.out.println("Empfaenger: 		"+this.msg.getReceiver());
+		System.out.println("Nachicht:   		"+this.msg.getData()+"\n");
 		try {
 			this.com.openOutputPipe(this.msg.getReceiver());
 			this.com.sendMessage(msg);
@@ -80,7 +81,7 @@ public class TextBasedUserInterface {
 			this.msg.setTimestamp("20070516");
 			this.msg.setMessageType(1);
 			this.msg.setReciever(nodeName);
-			this.msg.setGruppe(Gruppe);
+			this.msg.setReceiverGroup(group);
 			this.msg.setInformation("Message myself!");
 			this.msg = msg.FromFile(com.getNodePath()+fileName);
 		} catch (IOException ioe) {
@@ -111,7 +112,7 @@ public class TextBasedUserInterface {
 	
 	public void connect () {
 		try {
-			System.out.print("Knoten-Name eingeben: ");
+			System.out.print("Profil-Name eingeben: ");
 			nodeName = this.stdin.readLine();
 			this.com = new Communication(nodeName);
 			com.connect();
@@ -139,7 +140,7 @@ public class TextBasedUserInterface {
 	public void menue ()  {
 		try {
 			String tmp;
-			int ende, ui;
+			int ui, ende;
 			ui = 0;
 			ende =0;
 			System.out.println("Willkommen zum Kommunikationssystem Mars Mission \n");
