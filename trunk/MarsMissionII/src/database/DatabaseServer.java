@@ -56,13 +56,13 @@ public class DatabaseServer {
 			
 			String query = "CREATE TABLE Messages (" +
 					"message_nr integer IDENTITY PRIMARY KEY, " +
-					"message_receiver varchar(50), " +
-					"receiver_group varchar(50), " +
-					"message_sender varchar(50), " +
-					"sender_group varchar(50), " +
+					"message_receiver varchar(20), " +
+					"receiver_group varchar(20), " +
+					"message_sender varchar(20), " +
+					"sender_group varchar(20), " +
 					"message_timestamp BIGINT, " +
 					"message_data varchar(255), " +
-					"message_type varchar(50) )";
+					"message_type varchar(10) )";
 			
 			stmt.execute(query);
 			
@@ -203,19 +203,38 @@ public class DatabaseServer {
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
-			System.out.println("Nr\tReceiver\tReceivergroup\tSender" + 
-							"\tSendergroup\tTimestamp\tData\tType\n");
+			/*System.out.println("Nr\tReceiver\tReceivergroup\tSender" + 
+							"\tSendergroup\tTimestamp\tData\tType\n");*/
+			
+			System.out.print(format("Nr", 5));
+			System.out.print(format("Reciever", 20));
+			System.out.print(format("Receivergroup", 20));
+			System.out.print(format("Sender", 20));
+			System.out.print(format("Sendergroup", 20));
+			System.out.print(format("Zeitstempel", 15));
+			System.out.print(format("Typ", 10));
+			System.out.println(format("Daten", 255));
+			
+			System.out.print(format("==", 5));
+			System.out.print(format("========", 20));
+			System.out.print(format("=============", 20));
+			System.out.print(format("======", 20));
+			System.out.print(format("===========", 20));
+			System.out.print(format("===========", 15));
+			System.out.print(format("===", 10));
+			System.out.println(format("=====", 255) + "\n");
+			
 			
 			while (rs.next())
             {
-                System.out.print(rs.getString(1) + "\t");
-                System.out.print(rs.getString(2) + "\t");
-                System.out.print(rs.getString(3) + "\t");
-                System.out.print(rs.getString(4) + "\t");
-                System.out.print(rs.getString(5) + "\t");
-                System.out.print(rs.getString(6) + "\t");
-                System.out.print(rs.getString(7) + "\t");
-                System.out.println(rs.getString(8) + "\t");
+				System.out.print(format(rs.getString(1), 5));
+				System.out.print(format(rs.getString(2), 20));
+				System.out.print(format(rs.getString(3), 20));
+				System.out.print(format(rs.getString(4), 20));
+				System.out.print(format(rs.getString(5), 20));
+				System.out.print(format(rs.getString(6), 15));
+				System.out.print(format(rs.getString(8), 10));
+				System.out.println(format(rs.getString(7), 255) + "\n");
             }
 			
 		} catch (SQLException e) {
@@ -271,6 +290,12 @@ public class DatabaseServer {
 				}
 		}
 		return result;
+	}
+	
+	private static String format(String input, int size) {
+		while (input.length() < size)
+			input += " ";
+		return input; 
 	}
 	
 	public static void main(String[] args) {
