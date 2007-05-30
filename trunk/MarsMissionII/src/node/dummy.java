@@ -7,6 +7,7 @@ package node;
  */
 
 import message.Message;
+import message.MessageFileOperations;
 import message.Queue;
 import base.Configuration;
 import base.Utilities;
@@ -30,7 +31,7 @@ public class dummy  {
 		System.out.println("sender group:   "+message.getSenderGroup());
 		System.out.println("receiver:       "+message.getReceiver());
 		System.out.println("receiver group: "+message.getReceiverGroup());
-		System.out.println("timestamp:      "+message.getTimeStap());
+		System.out.println("timestamp:      "+message.getTimeStamp());
 		System.out.println("type:           "+message.getType());
 		System.out.println("data:           "+message.getData());
 
@@ -54,7 +55,7 @@ public class dummy  {
 		System.out.println("sender group:   "+message.getSenderGroup());
 		System.out.println("receiver:       "+message.getReceiver());
 		System.out.println("receiver group: "+message.getReceiverGroup());
-		System.out.println("timestamp:      "+message.getTimeStap());
+		System.out.println("timestamp:      "+message.getTimeStamp());
 		System.out.println("type:           "+message.getType());
 		System.out.println("data:           "+message.getData());
 
@@ -74,7 +75,7 @@ public class dummy  {
 			System.out.println("sender group:   "+message.getSenderGroup());
 			System.out.println("receiver:       "+message.getReceiver());
 			System.out.println("receiver group: "+message.getReceiverGroup());
-			System.out.println("timestamp:      "+message.getTimeStap());
+			System.out.println("timestamp:      "+message.getTimeStamp());
 			System.out.println("type:           "+message.getType());
 			System.out.println("data:           "+message.getData());
 			System.out.println(queue.size()+" messages remaining!");
@@ -84,23 +85,42 @@ public class dummy  {
 		long hash = Message.hashMessage(message);
 		System.out.println(hash);
 		System.out.println("\nNow create a new message from message and hash.");
-		message = Message.createVerifietMessage(message.getSender(), message.getSenderGroup(),message.getReceiver(),message.getReceiverGroup(),message.getType(),message.getTimeStap(),message.getData(), hash);
+		message = Message.createVerifietMessage(message.getSender(), message.getSenderGroup(),message.getReceiver(),message.getReceiverGroup(),message.getType(),message.getTimeStamp(),message.getData(), hash);
 		System.out.println("New created message.");	
 		System.out.println("sender:         "+message.getSender());
 		System.out.println("sender group:   "+message.getSenderGroup());
 		System.out.println("receiver:       "+message.getReceiver());
 		System.out.println("receiver group: "+message.getReceiverGroup());
-		System.out.println("timestamp:      "+message.getTimeStap());
+		System.out.println("timestamp:      "+message.getTimeStamp());
 		System.out.println("type:           "+message.getType());
 		System.out.println("data:           "+message.getData());
 		
 		System.out.println("\nTry to fake a message hash, set hash to 1001.");
 		hash = 1001;
-		message = Message.createVerifietMessage(message.getSender(), message.getSenderGroup(),message.getReceiver(),message.getReceiverGroup(),message.getType(),message.getTimeStap(),message.getData(), hash);
+		message = Message.createVerifietMessage(message.getSender(), message.getSenderGroup(),message.getReceiver(),message.getReceiverGroup(),message.getType(),message.getTimeStamp(),message.getData(), hash);
 		if (message == null)
 			System.out.println("Faking a message failed.");
 		else
 			System.out.println("Faking a message succeded.");
+		
+		message = new Message();
+		message.setData("hallo456");
+		message.setReceiver("MaZ");
+		message.setSender("Torsten");
+		message.setType(message.commandType());
+		System.out.println("Writing message to file message-test.txt");
+		MessageFileOperations.saveToFile("message-test.txt", message);
+		message = null;
+		System.out.println("Loading saved message from file-testt.txt");
+		message = MessageFileOperations.loadFromFile("message-test.txt");
+		System.out.println("sender:         "+message.getSender());
+		System.out.println("sender group:   "+message.getSenderGroup());
+		System.out.println("receiver:       "+message.getReceiver());
+		System.out.println("receiver group: "+message.getReceiverGroup());
+		System.out.println("timestamp:      "+message.getTimeStamp());
+		System.out.println("type:           "+message.getType());
+		System.out.println("data:           "+message.getData());
+	
 		
 		
 		System.out.println();

@@ -232,7 +232,6 @@ public class RendezvousList {
 	 * @return the line, if it wasn't found, -1 will be returned
 	 */
 	public static int find(String rendezvous) {
-		rendezvous += "\n";
 		int counter = 0;
 		try {
 			FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);

@@ -111,7 +111,7 @@ public class Message {
 	 * Returns the message time stamp
 	 * @return the message time stamp
 	 */
-	public Date getTimeStap () {
+	public Date getTimeStamp () {
 		return this.message_timeStamp;
 	}
 
@@ -259,7 +259,7 @@ public class Message {
 	 *        the hash of the message
 	 */
 	public static long hashMessage (Message message) {
-		long hash = message.getTimeStap().getTime();
+		long hash = message.getTimeStamp().getTime() % 7;
 		for (int i=0; i < message.getData().length(); i++)
 			hash = hash + (long)message.getData().charAt(i);
 		for (int i=0; i < message.getReceiver().length(); i++)
