@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import database.DatabaseServer;
+
 import base.Configuration;
 import net.jxta.document.AdvertisementFactory;
 import net.jxta.document.MimeMediaType;
@@ -14,6 +16,7 @@ import net.jxta.endpoint.StringMessageElement;
 import net.jxta.exception.PeerGroupException;
 import net.jxta.peergroup.NetPeerGroupFactory;
 import net.jxta.pipe.PipeMsgEvent;
+import net.jxta.pipe.PipeMsgListener;
 import net.jxta.pipe.PipeService;
 import net.jxta.protocol.PipeAdvertisement;
 import net.jxta.rendezvous.RendezVousService;
@@ -21,7 +24,7 @@ import net.jxta.rendezvous.RendezvousEvent;
 import net.jxta.rendezvous.RendezvousListener;
 import net.jxta.util.PipeUtilities;
 
-public class Communication {
+public class Communication implements PipeMsgListener {
 
 	RendezVousService rendezvousService = null;
 	
@@ -77,17 +80,15 @@ public class Communication {
 		}
 	}
 
-
 	/**
 	 * Pipe Message Event
 	 */
 	public void pipeMsgEvent (PipeMsgEvent event) {
-		Message msg = Message.parse(event.getMessage().getMessageElement("data").toString());
+		Message message = Message.fromXML(event.getMessage().getMessageElement("data").toString());
 		Logger.getAnonymousLogger().info(event.getMessage().getMessageElement("data").toString());
-		saveMessage(msg);
-		System.out.println("\n"+Configuration.profileName+": New Message from "+msg.sender);
+		DatabaseServer.insertMessage(message);
+		System.out.println("\n"+Configuration.profileName+": New Message from "+message.getSender());
 	}
-
 	
 	/**
 	 * Write out the own PipeAdverisement in a file

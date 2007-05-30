@@ -1,5 +1,9 @@
 package message;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 /**
@@ -310,4 +314,31 @@ public class Message {
 		else
 			return null;
 	}
+
+	/**
+	 * Converts the message into xml string for sending 
+	 * @return
+	 *        the xml string
+	 */
+	public static String toXML (Message message) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		XMLEncoder enc = new XMLEncoder(out);
+		enc.writeObject(message);
+		enc.close();
+		return out.toString();
+	}
+	
+	/**
+	 * Converts an xml string to a Message
+	 * @param xmlString
+	 *        the (incoming) xml string 
+	 * @return
+	 *        the message object
+	 */
+	public static Message fromXML (String xmlString) {
+		XMLDecoder dec = new XMLDecoder (new ByteArrayInputStream(xmlString.getBytes()));
+		Message message = (Message)dec.readObject();
+		return message;
+	}
+
 }
