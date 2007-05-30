@@ -22,92 +22,98 @@ public class Configuration {
 	/**
 	 * Project name
 	 */
-	protected String project = "MarsMissionII";
+	public String project = "MarsMissionII";
 	
 	/**
 	 * Node name 
 	 */
-	protected String nodeName = "Node";
+	public String nodeName = "Node";
 	
 	/**
 	 * Node principal
 	 */
-	protected String principal = nodeName;
+	public String principal = nodeName;
 	
 	/**
 	 * Node password
 	 */
-	protected String password = "mars2007";
+	public String password = "mars2007";
 	
-	protected static String rendezvousFile = "rdv.lst";
+	public static String rendezvousFile = "rdv.lst";
 	
-	protected static String relayFile = "rly.lst";
+	public static String relayFile = "rly.lst";
+	
+	public static String globalPath = "";
+	
+	public static String projectPath = "";
 	
 	/**
 	 * PeerGroup
 	 */
-	protected PeerGroup netPeerGroup = null;
+	public PeerGroup netPeerGroup = null;
 
 	/**
 	 * Stores the configuration
 	 */
-	protected NetworkConfigurator configuration = null;
+	public NetworkConfigurator configuration = null;
 
 	/**
 	 * Pipe Advertisement
 	 */
-	protected PipeAdvertisement pipeAdv = null;
+	public PipeAdvertisement pipeAdv = null;
 	
 	/**
 	 * Pipe Service
 	 */
-	protected PipeService pipeServ = null;
+	public PipeService pipeServ = null;
 	
 	/**
 	 * Discovery Service
 	 */
-	protected DiscoveryService discServ = null;
+	public DiscoveryService discServ = null;
 	
 	/**
 	 * NetworkManager
 	 */
-	protected NetworkManager manager; 
+	public NetworkManager manager; 
 	
 	/**
 	 * Input pipe
 	 */
-	protected InputPipe inputPipe = null;
+	public InputPipe inputPipe = null;
 	
 	/**
 	 * Output pipe
 	 */
-	protected OutputPipe outputPipe = null;
+	public OutputPipe outputPipe = null;
 
 	/**
 	 * Message container for outgoing messages
 	 */
-	protected net.jxta.endpoint.Message message_out = null;
+	public net.jxta.endpoint.Message message_out = null;
 
 	/**
 	 * Time to wait for a rendezvous connection in msec
 	 */
-	protected long waitTime = 10000;	
+	public long waitTime = 10000;	
 	
 	public Configuration (String profile) {
 		this.nodeName = profile;
 		System.setProperty("JXTA_HOME","."+this.project+"_"+this.nodeName);
 		this.configuration = new NetworkConfigurator();
+		setProjectPath();
+		setGlobalPath();
 		if (!configuration.exists()) {
 			createConfig();
 		} else {
 			System.out.println(nodeName+": Configuration found.");
 			RendezvousList.addHostAdresses();
 		}
-		DatabaseServer.connect();
+		System.out.println("create connection to message database.");
+		DatabaseServer.createDatabase();
 	}
 	
 	private void createConfig() {
-		RendezvousList.addHostAdresses();
 		// Create a new configuration with a new name, principal, and pass
 		System.out.println("\n"+this.nodeName+": No configuration found. Autogenerate a new configuration.");
 		configuration.setName(nodeName);
@@ -122,7 +128,7 @@ public class Configuration {
 		configuration.setHttpOutgoing(false);
 		configuration.setUseMulticast(false);
 		configuration.setUseOnlyRendezvousSeeds(true);
-		configuration.addRdvSeedingURI(Utilities.toURI(RendezvousList.getHomePath()));
+		configuration.addRdvSeedingURI(Utilities.toURI(Configuration.getProjectPath()+rendezvousFile));
 		configuration.setTcpPort(9702);
 		configuration.setTcpEndPort(9702);
 		configuration.setTcpStartPort(9702);
@@ -139,5 +145,55 @@ public class Configuration {
 			ioe.printStackTrace();
 			System.err.println();
 		}
+		RendezvousList.addHostAdresses();
+	}
+	
+	public void setAsRendezvous() {
+		System.out.println("\n"+this.nodeName+":Set configuration to rendezvous server.");
+		configuration.setHttpEnabled(true);
+	    configuration.setHttpIncoming(true);
+	    configuration.setHttpOutgoing(true);
+	    configuration.setHttpPort(9700);
+	    configuration.setTcpEnabled(true);
+	    configuration.setTcpIncoming(true);
+	    configuration.setTcpOutgoing(true);
+	    configuration.setUseMulticast(false);
+	    configuration.setTcpPort(9701);
+	    configuration.setUseOnlyRendezvousSeeds(false);
+	    configuration.setUseOnlyRelaySeeds(false);
+	    configuration.setTcpEndPort(9701);
+	    configuration.setTcpStartPort(9701);
+	    configuration.addRdvSeedingURI(Utilities.toURI(Configuration.getProjectPath()+rendezvousFile));
+	    configuration.addRelaySeedingURI(Utilities.toURI(Configuration.getProjectPath()+rendezvousFile));
+	    configuration.setMode(NetworkConfigurator.RDV_SERVER
+	        +NetworkConfigurator.TCP_SERVER+NetworkConfigurator.TCP_CLIENT
+	        +NetworkConfigurator.RELAY_SERVER+NetworkConfigurator.HTTP_SERVER
+	        +NetworkConfigurator.HTTP_CLIENT);
+		try {
+			// persist it
+			configuration.save();
+
+		} catch (IOException ioe) {
+			System.err.println("\n"+this.nodeName+": Could not save the configuration!");
+			System.err.println("\n"+this.nodeName+": Error Message:");
+			ioe.printStackTrace();
+			System.err.println();
+		}
+	}
+	
+	private void setProjectPath() {
+		projectPath = System.getProperty("JXTA_HOME") + "\\";
+	}
+	
+	private void setGlobalPath() {
+		globalPath = System.getProperty("JXTA_HOME").replaceAll("\\"+"."+this.project+"_"+this.nodeName,"");
+	}
+
+	public static String getGlobalPath() {
+		return globalPath;
+	}
+
+	public static String getProjectPath() {
+		return projectPath;
 	}
 }

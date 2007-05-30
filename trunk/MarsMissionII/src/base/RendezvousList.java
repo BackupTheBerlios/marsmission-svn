@@ -174,7 +174,7 @@ public class RendezvousList {
 	 */
 	public static void overwrite () {
 		try {
-			FileWriter file = new FileWriter(rendezvousListHomePath+rendezvousListName);
+			FileWriter file = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile);
 			file.close();
 		} catch (IOException ioe) {
 			System.err.println("createRenzezvousList: Fehler beim Überschreiben der Rendezvous Liste!");
@@ -190,7 +190,7 @@ public class RendezvousList {
 	public static void add (String rendezvous) {
 		if (find(rendezvous) == -1)
 			try {
-				FileWriter file = new FileWriter(rendezvousListHomePath+rendezvousListName, true);
+				FileWriter file = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile, true);
 				file.write(rendezvous.toCharArray());
 				file.close();
 			} catch (IOException ioe) {
@@ -206,7 +206,7 @@ public class RendezvousList {
 	public static String getAll () {
 		String returnString = "";
 		try {
-			FileReader file = new FileReader(rendezvousListHomePath+rendezvousListName);
+			FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);
 			BufferedReader buff = new BufferedReader(file);
 			boolean eof = false;
 			while (!eof) {
@@ -235,7 +235,7 @@ public class RendezvousList {
 		rendezvous += "\n";
 		int counter = 0;
 		try {
-			FileReader file = new FileReader(rendezvousListHomePath+rendezvousListName);
+			FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);
 			BufferedReader buff = new BufferedReader(file);
 			boolean eof = false;
 			while (!eof) {
@@ -267,7 +267,7 @@ public class RendezvousList {
 			String newList = "";
 			int counter = 0;
 			try {
-				FileReader file = new FileReader(rendezvousListHomePath+rendezvousListName);
+				FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);
 				BufferedReader buff = new BufferedReader(file);
 				boolean eof = false;
 				while (!eof) {
@@ -282,7 +282,7 @@ public class RendezvousList {
 				}
 				buff.close();
 				
-				FileWriter writer = new FileWriter(rendezvousListHomePath+rendezvousListName);
+				FileWriter writer = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile);
 				writer.write(newList.toCharArray());
 				writer.close();
 			} catch (IOException ioe) {

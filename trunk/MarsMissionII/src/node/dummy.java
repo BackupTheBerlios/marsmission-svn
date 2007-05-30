@@ -6,15 +6,13 @@ package node;
  * Dummy zum Testen von Funktionen
  */
 
-import communication.Communication;
-import communication.Connect;
-
 import message.Message;
 import message.Queue;
+import base.Configuration;
 import base.Utilities;
 
 
-public class dummy extends Connect {
+public class dummy  {
 
 	/**
 	 * @param args
@@ -81,7 +79,31 @@ public class dummy extends Connect {
 			System.out.println("data:           "+message.getData());
 			System.out.println(queue.size()+" messages remaining!");
 		}
-		System.out.println();	
+		
+		System.out.println("\nCreate a hashsum of last message:\n");
+		long hash = Message.hashMessage(message);
+		System.out.println(hash);
+		System.out.println("\nNow create a new message from message and hash.");
+		message = Message.createVerifietMessage(message.getSender(), message.getSenderGroup(),message.getReceiver(),message.getReceiverGroup(),message.getType(),message.getTimeStap(),message.getData(), hash);
+		System.out.println("New created message.");	
+		System.out.println("sender:         "+message.getSender());
+		System.out.println("sender group:   "+message.getSenderGroup());
+		System.out.println("receiver:       "+message.getReceiver());
+		System.out.println("receiver group: "+message.getReceiverGroup());
+		System.out.println("timestamp:      "+message.getTimeStap());
+		System.out.println("type:           "+message.getType());
+		System.out.println("data:           "+message.getData());
+		
+		System.out.println("\nTry to fake a message hash, set hash to 1001.");
+		hash = 1001;
+		message = Message.createVerifietMessage(message.getSender(), message.getSenderGroup(),message.getReceiver(),message.getReceiverGroup(),message.getType(),message.getTimeStap(),message.getData(), hash);
+		if (message == null)
+			System.out.println("Faking a message failed.");
+		else
+			System.out.println("Faking a message succeded.");
+		
+		
+		System.out.println();
 		
 		String pathURI = "D:\\Dokumente und Einstellungen\\Windows\\Torsten Burschka\\";
 		System.out.println();
@@ -100,6 +122,12 @@ public class dummy extends Connect {
 		System.out.println("pathURI: "+pathURI);
 		System.out.println("toURI:   "+Utilities.toURI(pathURI));
 		System.out.println("toPath:  "+Utilities.toPath(pathURI));
-
+		
+		System.out.println("\n\nNow Open/Creating a profile named test123");
+		
+		Configuration conf = new Configuration("test123");
+		System.out.println(Configuration.getGlobalPath());
+		System.out.println(Configuration.getProjectPath());
 	}
+
 }

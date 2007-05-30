@@ -242,27 +242,60 @@ public class Message {
 		return command_type;
 	}
 	
-	private void setTimeStamp (Date timeStamp) {
+	/**
+	 * Set the time stamp of a message, used only by createVerifiedMessage
+	 * @param timeStamp
+	 *        the time stamp
+	 */
+	private void setTimeStamp(Date timeStamp) {
 		this.message_timeStamp = timeStamp;
 	}
 	
+	/**
+	 * Returns a hash of the message, will be used for storing the message in database
+	 * @param message
+	 *        the message to hash
+	 * @return
+	 *        the hash of the message
+	 */
 	public static long hashMessage (Message message) {
 		long hash = message.getTimeStap().getTime();
-		for (int i=0; i <= message.getData().length(); i++)
+		for (int i=0; i < message.getData().length(); i++)
 			hash = hash + (long)message.getData().charAt(i);
-		for (int i=0; i <= message.getReceiver().length(); i++)
+		for (int i=0; i < message.getReceiver().length(); i++)
 			hash = hash + (long)message.getReceiver().charAt(i);
-		for (int i=0; i <= message.getReceiverGroup().length(); i++)
+		for (int i=0; i < message.getReceiverGroup().length(); i++)
 			hash = hash + (long)message.getReceiverGroup().charAt(i);
-		for (int i=0; i <= message.getSender().length(); i++)
+		for (int i=0; i < message.getSender().length(); i++)
 			hash = hash + (long)message.getSender().charAt(i);
-		for (int i=0; i <= message.getSenderGroup().length(); i++)
+		for (int i=0; i < message.getSenderGroup().length(); i++)
 			hash = hash + (long)message.getSenderGroup().charAt(i);
-		for (int i=0; i <= message.getType().length(); i++)
+		for (int i=0; i < message.getType().length(); i++)
 			hash = hash + (long)message.getType().charAt(i);
 		return hash;
 	}
 	
+	/**
+	 * Create a new message with all parameter if the hash is correct 
+	 * @param sender
+	 *        the message sender
+	 * @param sender_group
+	 *        the group of sender
+	 * @param receiver
+	 *        the message receiver
+	 * @param receiver_group
+	 *        the group of receiver
+	 * @param type
+	 *        the message type
+	 * @param timeStamp
+	 *        the message time stamp
+	 * @param data
+	 *        the message data
+	 * @param hash
+	 *        the hash over the other parameter
+	 * @return
+	 *        return a message object
+	 */
 	public static Message createVerifietMessage (String sender, String sender_group, String receiver, String receiver_group, String type, Date timeStamp, String data, long hash) {
 		Message message = new Message();
 		message.setSender(sender);

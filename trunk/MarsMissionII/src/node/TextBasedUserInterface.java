@@ -7,12 +7,9 @@ import java.io.InputStreamReader;
 import message.Message;
 
 /**
- * 
- */
-
-/**
- * @author Torsten und Marian
- *
+ * Oberfaeche zur Steuerung des Knotens
+ * @author Marian Zoellner
+ * @author Torsten Burschka
  */
 public class TextBasedUserInterface {
 
@@ -47,12 +44,12 @@ public class TextBasedUserInterface {
 		}
 		
 		System.out.println("\nNachicht:");
-		System.out.println("Sender:     		"+this.msg.getSender());
-		System.out.println("Gruppe:				"+this.msg.getGruppe());
-		System.out.println("Empfaenger: 		"+this.msg.getReciever());
-		System.out.println("Empaengergruppe:	"+this.msg.getReceiverGroup());
-		System.out.println("Nachicht:   		"+this.msg.getInformation()+"\n");
-		System.out.println("Empfaenger: 		"+this.msg.getReceiver());
+		System.out.println("Sender:             "+this.msg.getSender());
+		System.out.println("Sendergruppe:       "+this.msg.getSenderGroup());
+		System.out.println("Empfaenger:         "+this.msg.getReceiver());
+		System.out.println("Empaengergruppe:    "+this.msg.getReceiverGroup());
+		System.out.println("Nachichtentyp:      "+this.msg.getType());
+		System.out.println("Timestamp:          "+this.msg.getTimeStap()+"\n");
 		System.out.println("Nachicht:   		"+this.msg.getData()+"\n");
 		try {
 			this.com.openOutputPipe(this.msg.getReceiver());
@@ -78,7 +75,7 @@ public class TextBasedUserInterface {
 			System.out.print("\n"+this.nodeName+": Dateiname: ");
 			fileName = this.stdin.readLine();
 			System.out.println("\n"+this.nodeName+": Nachicht aus "+com.getNodePath()+fileName+" laden.");
-			this.msg.setTimestamp("20070516");
+			this.msg..setTimestamp("20070516");
 			this.msg.setMessageType(1);
 			this.msg.setReciever(nodeName);
 			this.msg.setReceiverGroup(group);
