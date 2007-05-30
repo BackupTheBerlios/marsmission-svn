@@ -57,7 +57,7 @@ public class MessageFileOperations {
 			int[] index = new int[8];
 			for (int i=0; i<8; i++) {
 				index[i] = currentLine[i].indexOf("=");
-				currentLine[i].substring(index[i]+1,currentLine[i].length()-2);
+				currentLine[i] = currentLine[i].substring(index[i]+1);
 			}
 				
 			String sender         = currentLine[0];

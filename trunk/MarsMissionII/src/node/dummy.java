@@ -104,8 +104,8 @@ public class dummy  {
 			System.out.println("Faking a message succeded.");
 		
 		message = new Message();
-		message.setData("hallo456");
-		message.setReceiver("MaZ");
+		message.setData("ein test");
+		message.setReceiver("Steffen");
 		message.setSender("Torsten");
 		message.setType(message.commandType());
 		System.out.println("Writing message to file message-test.txt");
