@@ -8,6 +8,8 @@ import java.sql.Statement;
 import message.Message;
 import java.util.Date;
 
+import base.Configuration;
+
 
 /**
  * Class for Database Connectivity
@@ -51,7 +53,7 @@ public class DatabaseServer {
 		Connection con = null;
 		
 		try {
-			con = DriverManager.getConnection( "jdbc:hsqldb:MarsDB;shutdown=true", "sa" , "");
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.profilePath+"MarsDB;shutdown=true", "sa" , "");
 			
 			Statement stmt = con.createStatement();
 			
@@ -98,7 +100,7 @@ public class DatabaseServer {
 		Connection con = null;
 		
 		try {
-			con = DriverManager.getConnection( "jdbc:hsqldb:MarsDB;shutdown=true", "sa" , "");
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.profilePath+"MarsDB;shutdown=true", "sa" , "");
 			
 			Statement stmt = con.createStatement();
 			
@@ -136,7 +138,7 @@ public class DatabaseServer {
 		Connection con = null;
 		
 		try {
-			con = DriverManager.getConnection( "jdbc:hsqldb:MarsDB;shutdown=true", "sa" , "");
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.profilePath+"MarsDB;shutdown=true", "sa" , "");
 			
 			Statement stmt = con.createStatement();
 			
@@ -185,7 +187,7 @@ public class DatabaseServer {
 		Connection con = null;
 		
 		try {
-			con = DriverManager.getConnection( "jdbc:hsqldb:MarsDB;shutdown=true", "sa" , "");
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.profilePath+"MarsDB;shutdown=true", "sa" , "");
 			
 			Statement stmt = con.createStatement();
 			
@@ -266,7 +268,7 @@ public class DatabaseServer {
 		boolean result = true;
 		
 		try {
-			con = DriverManager.getConnection( "jdbc:hsqldb:MarsDB;shutdown=true", "sa" , "");
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.profilePath+"MarsDB;shutdown=true", "sa" , "");
 			
 			Statement stmt = con.createStatement();
 			

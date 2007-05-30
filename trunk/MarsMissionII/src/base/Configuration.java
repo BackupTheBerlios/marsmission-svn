@@ -45,7 +45,7 @@ public class Configuration {
 	
 	public static String globalPath = "";
 	
-	public static String projectPath = "";
+	public static String profilePath = "";
 	
 	/**
 	 * PeerGroup
@@ -182,7 +182,7 @@ public class Configuration {
 	}
 	
 	private void setProjectPath() {
-		projectPath = System.getProperty("JXTA_HOME") + "\\";
+		profilePath = System.getProperty("JXTA_HOME") + "\\";
 	}
 	
 	private void setGlobalPath() {
@@ -194,6 +194,6 @@ public class Configuration {
 	}
 
 	public static String getProjectPath() {
-		return projectPath;
+		return profilePath;
 	}
 }
