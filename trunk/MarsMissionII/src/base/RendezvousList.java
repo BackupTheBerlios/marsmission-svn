@@ -142,7 +142,7 @@ public class RendezvousList {
 			String localHost = InetAddress.getLocalHost().getHostName();
 			// for every network
 			for (InetAddress ia : InetAddress.getAllByName(localHost))
-				add(addressToRendezvous(ia.getHostAddress(),rendezvousProtocol,rendezvousPort) + "\n");
+				add(addressToRendezvous(ia.getHostAddress(),rendezvousProtocol,rendezvousPort));
 		} catch (Exception e) {
 			System.err.println("addHostAdresses: Fehler beim Auslesen der Adresse(n)!");
 			e.printStackTrace();
@@ -162,7 +162,7 @@ public class RendezvousList {
 			String localHost = InetAddress.getLocalHost().getHostName();
 			// for every network
 			for (InetAddress ia : InetAddress.getAllByName(localHost))
-				add(addressToRendezvous(ia.getHostAddress(),protocol,port) + "\n");
+				add(addressToRendezvous(ia.getHostAddress(),protocol,port));
 		} catch (Exception e) {
 			System.err.println("addHostAdresses: Fehler beim Auslesen der Adresse(n)!");
 			e.printStackTrace();
@@ -191,7 +191,7 @@ public class RendezvousList {
 		if (find(rendezvous) == -1)
 			try {
 				FileWriter file = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile, true);
-				file.write(rendezvous.toCharArray());
+				file.write(rendezvous.toString()+"\n");
 				file.close();
 			} catch (IOException ioe) {
 				System.err.println("addRendezvous: Fehler beim Schreiben in die Rendezvous Liste!");
