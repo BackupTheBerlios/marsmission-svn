@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import message.Message;
+import java.util.Date;
 
 
 /**
@@ -62,7 +63,8 @@ public class DatabaseServer {
 					"sender_group varchar(20), " +
 					"message_timestamp BIGINT, " +
 					"message_data varchar(255), " +
-					"message_type varchar(10) )";
+					"message_type varchar(10)," +
+					"hash BIGINT )";
 			
 			stmt.execute(query);
 			
@@ -146,7 +148,8 @@ public class DatabaseServer {
 						   "'" + mess.getSenderGroup() + "', " +
 						   mess.getTimeStap().getTime() + ", " +
 						   "'" + mess.getData() + "', " +
-						   "'" + mess.getType() + "' )";
+						   "'" + mess.getType() + "', " + 
+						   Message.hashMessage(mess) + ")";
 			
 			stmt.execute(query);
 			
@@ -213,7 +216,7 @@ public class DatabaseServer {
 			System.out.print(format("Sendergroup", 20));
 			System.out.print(format("Zeitstempel", 15));
 			System.out.print(format("Typ", 10));
-			System.out.println(format("Daten", 255));
+			System.out.println("Daten");
 			
 			System.out.print(format("==", 5));
 			System.out.print(format("========", 20));
@@ -222,7 +225,7 @@ public class DatabaseServer {
 			System.out.print(format("===========", 20));
 			System.out.print(format("===========", 15));
 			System.out.print(format("===", 10));
-			System.out.println(format("=====", 255) + "\n");
+			System.out.println("=====\n");
 			
 			
 			while (rs.next())
@@ -234,7 +237,7 @@ public class DatabaseServer {
 				System.out.print(format(rs.getString(5), 20));
 				System.out.print(format(rs.getString(6), 15));
 				System.out.print(format(rs.getString(8), 10));
-				System.out.println(format(rs.getString(7), 255) + "\n");
+				System.out.println(rs.getString(7));
             }
 			
 		} catch (SQLException e) {
@@ -274,9 +277,18 @@ public class DatabaseServer {
                 mess = new Message(rs.getString(4), rs.getString(5),
                 				   rs.getString(2), rs.getString(3),
                 				   rs.getString(8), rs.getString(7) );
+                mess = Message.createVerifietMessage(rs.getString(4), rs.getString(5), 
+                									 rs.getString(2), rs.getString(3), 
+                									 rs.getString(8), 
+                									 new Date(Long.parseLong(rs.getString(6))),
+                									 rs.getString(7), 
+                									 Long.parseLong(rs.getString(9)));
             }
 			
-			System.out.println("\nMessage loaded.\n");
+			if (mess != null)
+				System.out.println("\nMessage loaded.\n");
+			else
+				System.out.println("Criminal hash value");
 			
 		} catch (SQLException e) {
 			System.out.println("\nMessage not found!\n");
