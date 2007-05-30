@@ -122,9 +122,10 @@ public class DatabaseServer {
 	
 	/**
 	 * insert a message to database
-	 * @param mess: Message to insert
+	 * @param message
+	 *        Message to insert
 	 */
-	public static void insertMessage(Message mess) {
+	public static void insertMessage(Message message) {
 		try {
 			Class.forName( "org.hsqldb.jdbcDriver" );
 		} catch (ClassNotFoundException e) {
@@ -142,14 +143,14 @@ public class DatabaseServer {
 			String query = "INSERT " +
 						   "INTO Messages " + 
 						   "VALUES (null, " +
-						   "'" + mess.getReceiver() + "', " +
-						   "'" + mess.getReceiverGroup() + "', " +
-						   "'" + mess.getSender() + "', " +
-						   "'" + mess.getSenderGroup() + "', " +
-						   mess.getTimeStap().getTime() + ", " +
-						   "'" + mess.getData() + "', " +
-						   "'" + mess.getType() + "', " + 
-						   Message.hashMessage(mess) + ")";
+						   "'" + message.getReceiver() + "', " +
+						   "'" + message.getReceiverGroup() + "', " +
+						   "'" + message.getSender() + "', " +
+						   "'" + message.getSenderGroup() + "', " +
+						   message.getTimeStamp().getTime() + ", " +
+						   "'" + message.getData() + "', " +
+						   "'" + message.getType() + "', " + 
+						   Message.hashMessage(message) + ")";
 			
 			stmt.execute(query);
 			
@@ -170,7 +171,8 @@ public class DatabaseServer {
 	/**
 	 * get all messages from database
 	 * 
-	 * @param sender: node which messages should be shown (null = show all messages in database)
+	 * @param sender
+	 *        node which messages should be shown (null = show all messages in database)
 	 */
 	public static void getMessages(String sender, int sort) {
 		try {

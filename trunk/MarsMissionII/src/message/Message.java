@@ -125,7 +125,7 @@ public class Message {
 
 	/**
 	 * Set the message sender
-	 * @param message_sender
+	 * @param sender
 	 *        the message sender
 	 */
 	public void setSender(String sender) {
@@ -142,7 +142,7 @@ public class Message {
 
 	/**
 	 * Set the group of sender
-	 * @param group
+	 * @param sender_group
 	 *        the sender group
 	 */
 	public void setSenderGroup(String sender_group) {
@@ -159,7 +159,7 @@ public class Message {
 
 	/**
 	 * Set the message receiver
-	 * @param message_receiver
+	 * @param receiver
 	 *        the message receiver
 	 */
 	public void setReceiver(String receiver) {
@@ -176,7 +176,7 @@ public class Message {
 
 	/**
 	 * Set the group of receiver
-	 * @param group
+	 * @param receiver_group
 	 *        the receiver group
 	 */
 	public void setReceiverGroup(String receiver_group) {
@@ -193,7 +193,7 @@ public class Message {
 
 	/**
 	 * Set the message data - can be different type of data
-	 * @param message_data
+	 * @param data
 	 *        the message data
 	 */
 	public void setData(String data) {
@@ -211,7 +211,7 @@ public class Message {
 
 	/**
 	 * Set the type of message data
-	 * @param message_type
+	 * @param type
 	 *        the message type
 	 */
 	public void setType(String type) {
@@ -259,7 +259,7 @@ public class Message {
 	 *        the hash of the message
 	 */
 	public static long hashMessage (Message message) {
-		long hash = message.getTimeStamp().getTime() % 7;
+		long hash = message.getTimeStamp().getTime() % 3;
 		for (int i=0; i < message.getData().length(); i++)
 			hash = hash + (long)message.getData().charAt(i);
 		for (int i=0; i < message.getReceiver().length(); i++)

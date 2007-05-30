@@ -184,7 +184,7 @@ public class RendezvousList {
 	
 	/**
 	 * Create a new or add to an existing rendezvous list file the given rendezvous
-	 * @param Rendezvous
+	 * @param rendezvous
 	 *            A list of rendezvous, parted with \n
 	 */
 	public static void add (String rendezvous) {

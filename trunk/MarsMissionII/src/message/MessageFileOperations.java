@@ -1,16 +1,26 @@
 package message;
 
 import message.Message;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Operations for saving/loading a message (verified) to/from file 
+ * @author Torsten Burschka
+ * @author Steffen Boettcher
+ */
 public class MessageFileOperations {
 
-	
+	/**
+	 * Save a message to file
+	 * @param fileName
+	 *        name (including path) of the file
+	 * @param message
+	 *        the message to be stored
+	 */
 	public static void saveToFile(String fileName, Message message) {
 		long hash = Message.hashMessage(message);
 		try {
@@ -32,12 +42,16 @@ public class MessageFileOperations {
 		}
 	}
 		
-
+	/**
+	 * Load a message to a message object (only verified messages)
+	 * @param filename
+	 *        name (including path) of the file
+	 * @return
+	 *        the message, if it is verified, else return null
+	 */
 	public static Message loadFromFile(String filename) {
 		Message message;
-
 		String[] currentLine = new String[8];
-
 		try {
 			FileReader file = new FileReader(filename);
 			BufferedReader buffer = new BufferedReader(file);
@@ -53,13 +67,11 @@ public class MessageFileOperations {
 					currentLine[7] = currentLine[7] + line;
 			}
 			buffer.close();
-
 			int[] index = new int[8];
 			for (int i=0; i<8; i++) {
 				index[i] = currentLine[i].indexOf("=");
 				currentLine[i] = currentLine[i].substring(index[i]+1);
 			}
-				
 			String sender         = currentLine[0];
 			String sender_group   = currentLine[1];
 			String receiver       = currentLine[2];
@@ -68,9 +80,7 @@ public class MessageFileOperations {
 			Date timeStamp        = new Date(Long.parseLong(currentLine[5]));
 			long hash             = Long.parseLong(currentLine[6]);
 			String data           = currentLine[7];
-
 			message = Message.createVerifietMessage(sender, sender_group, receiver, receiver_group, type, timeStamp, data, hash);
-
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 			message = null;
