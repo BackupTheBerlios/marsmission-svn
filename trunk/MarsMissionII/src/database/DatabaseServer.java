@@ -71,7 +71,7 @@ public class DatabaseServer {
 			System.out.println("\nDatabase created successfully.\n");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// do nothing
 		} finally {
 			if (con != null)
 				try {
