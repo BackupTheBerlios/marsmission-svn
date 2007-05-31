@@ -16,16 +16,6 @@ import java.net.InetAddress;
 public class RendezvousList {
 
 	/**
-	 * Path to rendezvous list file
-	 */
-	private static String rendezvousListHomePath = "";
-	
-	/**
-	 * Name of the rendezvous list file
-	 */
-	private static String rendezvousListName = "rdv.lst";
-	
-	/**
 	 * Transfer protocol
 	 */
 	private static String rendezvousProtocol = "tcp";
@@ -34,24 +24,6 @@ public class RendezvousList {
 	 * Transfer port
 	 */
 	private static int rendezvousPort = 9701;
-	
-	/**
-	 * Set the home path for the rendezvous list file
-	 * @param homePath
-	 *            home path
-	 */
-	public static void setHomePath (String homePath) {
-		rendezvousListHomePath = homePath;
-	}
-
-	/**
-	 * Set the rendezvous list file name
-	 * @param name
-	 * 			  name, default: "rdv.lst"
-	 */
-	public static void setRendezvousListName (String name) {
-		rendezvousListName = name;
-	}
 	
 	/**
 	 * Set the protocol, which is used
@@ -70,34 +42,15 @@ public class RendezvousList {
 	public static void setPort (int port) {
 		rendezvousPort = port;
 	}
-	
-	/**
-	 * Returns the actual home path
-	 * @return
-	 *      homePath
-	 */
-	public static String getHomePath() {
-		return rendezvousListHomePath;
-	}
-	
+		
 	/**
 	 * This will reset rendezvousListName, rendezvousProtocol and rendezvousPort to defaults.
 	 */
 	public static void resetDefaults() {
-		rendezvousListName = "rdv.lst";
 		rendezvousProtocol = "tcp";
 		rendezvousPort     = 9701;
 	}
 	
-	/**
-	 * Returns the actual rendezvous list name
-	 * @return
-	 *      rendezvousListName
-	 */
-	public String getRendezvousListName() {
-		return rendezvousListName;
-	}
-
 	/**
 	 * Returns the actual protocol
 	 * @return
@@ -138,7 +91,7 @@ public class RendezvousList {
 	 */
 	public static void addHostAdresses () {
 		try {
-			// get the hostname
+			// get the host name
 			String localHost = InetAddress.getLocalHost().getHostName();
 			// for every network
 			for (InetAddress ia : InetAddress.getAllByName(localHost))
@@ -158,7 +111,7 @@ public class RendezvousList {
 	 */
 	public static void addHostAdresses (String protocol, int port) {
 		try {
-			// get the hostname
+			// get the host name
 			String localHost = InetAddress.getLocalHost().getHostName();
 			// for every network
 			for (InetAddress ia : InetAddress.getAllByName(localHost))
@@ -174,7 +127,7 @@ public class RendezvousList {
 	 */
 	public static void overwrite () {
 		try {
-			FileWriter file = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile);
+			FileWriter file = new FileWriter(Configuration.getProfilePath()+Configuration.rendezvousFile);
 			file.close();
 		} catch (IOException ioe) {
 			System.err.println("createRenzezvousList: Fehler beim Überschreiben der Rendezvous Liste!");
@@ -190,7 +143,7 @@ public class RendezvousList {
 	public static void add (String rendezvous) {
 		if (find(rendezvous) == -1)
 			try {
-				FileWriter file = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile, true);
+				FileWriter file = new FileWriter(Configuration.getProfilePath()+Configuration.rendezvousFile, true);
 				file.write(rendezvous.toString()+"\n");
 				file.close();
 			} catch (IOException ioe) {
@@ -206,7 +159,7 @@ public class RendezvousList {
 	public static String getAll () {
 		String returnString = "";
 		try {
-			FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);
+			FileReader file = new FileReader(Configuration.getProfilePath()+Configuration.rendezvousFile);
 			BufferedReader buff = new BufferedReader(file);
 			boolean eof = false;
 			while (!eof) {
@@ -234,7 +187,7 @@ public class RendezvousList {
 	public static int find(String rendezvous) {
 		int counter = 0;
 		try {
-			FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);
+			FileReader file = new FileReader(Configuration.getProfilePath()+Configuration.rendezvousFile);
 			BufferedReader buff = new BufferedReader(file);
 			boolean eof = false;
 			while (!eof) {
@@ -266,7 +219,7 @@ public class RendezvousList {
 			String newList = "";
 			int counter = 0;
 			try {
-				FileReader file = new FileReader(Configuration.getProjectPath()+Configuration.rendezvousFile);
+				FileReader file = new FileReader(Configuration.getProfilePath()+Configuration.rendezvousFile);
 				BufferedReader buff = new BufferedReader(file);
 				boolean eof = false;
 				while (!eof) {
@@ -281,7 +234,7 @@ public class RendezvousList {
 				}
 				buff.close();
 				
-				FileWriter writer = new FileWriter(Configuration.getProjectPath()+Configuration.rendezvousFile);
+				FileWriter writer = new FileWriter(Configuration.getProfilePath()+Configuration.rendezvousFile);
 				writer.write(newList.toCharArray());
 				writer.close();
 			} catch (IOException ioe) {

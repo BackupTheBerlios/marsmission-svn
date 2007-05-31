@@ -32,6 +32,10 @@ public class Communication implements PipeMsgListener {
 		public void rendezvousEvent(RendezvousEvent arg0) {}
 	}
 	
+	public Communication() {
+		
+	}
+	
 	public void connect () {
 		System.out.println("\n"+Configuration.profileName+": Try to connect to PeerGroup.");
 		try {
@@ -97,7 +101,7 @@ public class Communication implements PipeMsgListener {
 	 */
 	public void storePipeAdvertisement(PipeAdvertisement pipeAdv) throws IOException {
 		try {
-			FileWriter file = new FileWriter(Configuration.globalPath+"PipeAdv_"+Configuration.profileName+".xml");
+			FileWriter file = new FileWriter(Configuration.getGlobalPath()+"PipeAdv_"+Configuration.profileName+".xml");
 			file.write(pipeAdv.toString());
 			file.close();
 		} catch (IOException ioe) {
@@ -118,7 +122,7 @@ public class Communication implements PipeMsgListener {
 	public PipeAdvertisement loadPipeAdverisement (String nodeName) throws IOException {
 		PipeAdvertisement returnPipeAdvertisement = null;
 		try {
-		FileInputStream is = new FileInputStream(Configuration.globalPath+"PipeAdv_"+nodeName+".xml");
+		FileInputStream is = new FileInputStream(Configuration.getGlobalPath()+"PipeAdv_"+nodeName+".xml");
 		returnPipeAdvertisement = (PipeAdvertisement)AdvertisementFactory.newAdvertisement(new MimeMediaType("text/xml"), is);
 		} catch (Exception e) {
 			System.out.println("\n"+Configuration.profileName+": failed to read/parse pipe advertisement");
@@ -191,9 +195,9 @@ public class Communication implements PipeMsgListener {
 	/**
 	 * Sending a message
 	 */
-	public void sendMessage(message.Message message) {
+	public void sendMessage(Message message) {
+		openOutputPipe(message.getReceiver());
 		Configuration.message_out = new net.jxta.endpoint.Message();
-		
 		try {
 			Configuration.message_out.addMessageElement(new StringMessageElement("data",message.toString(),null));
 			Configuration.outputPipe.send(Configuration.message_out);
@@ -203,6 +207,7 @@ public class Communication implements PipeMsgListener {
 			ioe_send.printStackTrace();
 			System.err.println();
 		}
+		closeOutputPipe();
 	}
 	
 	/**

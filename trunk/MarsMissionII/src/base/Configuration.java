@@ -43,9 +43,9 @@ public class Configuration {
 	
 	public static String relayFile = "rly.lst";
 	
-	public static String globalPath = "";
+	private static String globalPath = "";
 	
-	public static String profilePath = "";
+	private static String profilePath = "";
 	
 	/**
 	 * PeerGroup
@@ -70,7 +70,7 @@ public class Configuration {
 	/**
 	 * Discovery Service
 	 */
-	public DiscoveryService discServ = null;
+	public static DiscoveryService discServ = null;
 	
 	/**
 	 * NetworkManager
@@ -97,12 +97,17 @@ public class Configuration {
 	 */
 	public static long waitTime = 10000;	
 	
-	public Configuration (String profile) {
+	/**
+	 * Initiate the Configuration with values
+	 * @param profile
+	 *        the profile you want to use
+	 */
+	public static void init (String profile) {
 		profileName = profile;
 		System.setProperty("JXTA_HOME","."+project+"_"+profileName);
 		configuration = new NetworkConfigurator();
-		setProjectPath();
-		setGlobalPath();
+		profilePath = System.getProperty("JXTA_HOME") + "\\";
+		globalPath = System.getProperty("JXTA_HOME").replaceAll("\\"+"."+project+"_"+profileName,"");
 		if (!configuration.exists()) {
 			createConfig();
 		} else {
@@ -110,10 +115,13 @@ public class Configuration {
 			RendezvousList.addHostAdresses();
 		}
 		System.out.println("create connection to message database.");
-		DatabaseServer.createDatabase();
+		DatabaseServer.createDatabase();		
 	}
 	
-	private void createConfig() {
+	/**
+	 * Creates the default Node Configuration
+	 */
+	private static void createConfig() {
 		// Create a new configuration with a new name, principal, and pass
 		System.out.println("\n"+profileName+": No configuration found. Autogenerate a new configuration.");
 		configuration.setName(profileName);
@@ -128,7 +136,7 @@ public class Configuration {
 		configuration.setHttpOutgoing(false);
 		configuration.setUseMulticast(false);
 		configuration.setUseOnlyRendezvousSeeds(true);
-		configuration.addRdvSeedingURI(Utilities.toURI(Configuration.getProjectPath()+rendezvousFile));
+		configuration.addRdvSeedingURI(Utilities.toURI(Configuration.getProfilePath()+rendezvousFile));
 		configuration.setTcpPort(9702);
 		configuration.setTcpEndPort(9702);
 		configuration.setTcpStartPort(9702);
@@ -148,7 +156,10 @@ public class Configuration {
 		RendezvousList.addHostAdresses();
 	}
 	
-	public void setAsRendezvous() {
+	/**
+	 * Change the configuration to act as a rendezvous
+	 */
+	public static void setAsRendezvous() {
 		System.out.println("\n"+profileName+":Set configuration to rendezvous server.");
 		configuration.setHttpEnabled(true);
 	    configuration.setHttpIncoming(true);
@@ -163,8 +174,8 @@ public class Configuration {
 	    configuration.setUseOnlyRelaySeeds(false);
 	    configuration.setTcpEndPort(9701);
 	    configuration.setTcpStartPort(9701);
-	    configuration.addRdvSeedingURI(Utilities.toURI(Configuration.getProjectPath()+rendezvousFile));
-	    configuration.addRelaySeedingURI(Utilities.toURI(Configuration.getProjectPath()+rendezvousFile));
+	    configuration.addRdvSeedingURI(Utilities.toURI(Configuration.getProfilePath()+rendezvousFile));
+	    configuration.addRelaySeedingURI(Utilities.toURI(Configuration.getProfilePath()+rendezvousFile));
 	    configuration.setMode(NetworkConfigurator.RDV_SERVER
 	        +NetworkConfigurator.TCP_SERVER+NetworkConfigurator.TCP_CLIENT
 	        +NetworkConfigurator.RELAY_SERVER+NetworkConfigurator.HTTP_SERVER
@@ -180,20 +191,12 @@ public class Configuration {
 			System.err.println();
 		}
 	}
-	
-	private void setProjectPath() {
-		profilePath = System.getProperty("JXTA_HOME") + "\\";
-	}
-	
-	private void setGlobalPath() {
-		globalPath = System.getProperty("JXTA_HOME").replaceAll("\\"+"."+project+"_"+profileName,"");
-	}
 
 	public static String getGlobalPath() {
 		return globalPath;
 	}
 
-	public static String getProjectPath() {
+	public static String getProfilePath() {
 		return profilePath;
 	}
 }

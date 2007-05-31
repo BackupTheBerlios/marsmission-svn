@@ -30,7 +30,7 @@ public class dummy  {
 /////////////////////////////////////////////////////////////////////////////
 		
 		System.out.println("\n\nNow Open/Creating a profile named test123");
-		Configuration conf = new Configuration("test123");
+		Configuration.init("test123");
 		
 		System.out.println("Generate a new message.");
 		// creates a new message object
@@ -86,7 +86,7 @@ public class dummy  {
 
 		System.out.println("\nWriting message to a file named message-test.txt");
 		// save the message to file
-		MessageFileOperations.saveToFile(Configuration.profilePath+"message-test.txt", message);
+		MessageFileOperations.saveToFile(Configuration.getProfilePath()+"message-test.txt", message);
 
 		System.out.println("\nCreate a hashsum of message:\n");
 		// create a hash sum of the message
@@ -118,7 +118,7 @@ public class dummy  {
 		}
 		
 		System.out.println("\nNow loading saved message from file-testt.txt");
-		message = MessageFileOperations.loadFromFile(Configuration.profilePath+"message-test.txt");
+		message = MessageFileOperations.loadFromFile(Configuration.getProfilePath()+"message-test.txt");
 		System.out.println("\nLoaded message:");
 		printMessage(message);
 
