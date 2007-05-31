@@ -70,6 +70,13 @@ public class DatabaseServer {
 			
 			stmt.execute(query);
 			
+			query = "CREATE TABLE Groups (" +
+					"message_nr integer IDENTITY PRIMARY KEY, " +
+					"name VARCHAR(20), " +
+					"groupname VARCHAR(20) )";
+			
+			stmt.execute(query);
+			
 			System.out.println("\nDatabase created successfully.\n");
 			
 		} catch (SQLException e) {
@@ -314,6 +321,50 @@ public class DatabaseServer {
 		return input; 
 	}
 	
+//	public static void deleteGroupFellowship(String group)
+//	public static boolean checkGroupFellowship(String group)
+	
+	/**
+	 * store a reference name to a group in database
+	 * @param name: reference name
+	 * @param group: group name 
+	 */
+	public static void addGroupFellowship(String name, String group) {
+		try {
+			Class.forName( "org.hsqldb.jdbcDriver" );
+		} catch (ClassNotFoundException e) {
+			System.err.println("Keine Treiber-Klasse!");
+			return;
+		}
+		
+		Connection con = null;
+		
+		try {
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.getProfilePath()+"MarsDB;shutdown=true", "sa" , "");
+			
+			Statement stmt = con.createStatement();
+			
+			String query = "INSERT INTO Groups VALUES ( null, '" +
+						   name + "', '" + group + "' )";
+			
+			stmt.execute(query);
+			
+			System.out.println("\nAdded to group.\n");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+//	public static void changeGroupFellowshipName(String group, String newName)
+//	public static String getGroupFellowshipName(String group)
+	
 	public static void main(String[] args) {
 		DatabaseServer.createDatabase();
 		Message tmp = new Message("Steffen", "Steffengroup", "Ellen", "Ellengroup",
@@ -328,6 +379,7 @@ public class DatabaseServer {
 		DatabaseServer.getMessages("Strauss", DatabaseServer.sortByType);
 		Message newMess = new Message();;
 		DatabaseServer.saveInMessage(2, newMess);
+		DatabaseServer.addGroupFellowship("Steffen", "Apolda");
 		DatabaseServer.deleteDatabase();
 	}
 }
