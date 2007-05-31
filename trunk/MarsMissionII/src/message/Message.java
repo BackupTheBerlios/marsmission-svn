@@ -263,7 +263,7 @@ public class Message {
 	 *        the hash of the message
 	 */
 	public static long hashMessage (Message message) {
-		long hash = message.getTimeStamp().getTime() % 3;
+		long hash = message.getTimeStamp().getTime() * 3;
 		for (int i=0; i < message.getData().length(); i++)
 			hash = hash + (long)message.getData().charAt(i);
 		for (int i=0; i < message.getReceiver().length(); i++)
