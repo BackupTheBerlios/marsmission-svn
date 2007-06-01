@@ -5,7 +5,6 @@ import message.Message;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import database.MessageServer;
 
@@ -85,6 +84,7 @@ public class Communication implements PipeMsgListener {
 			rendezvousService.setAutoStart(true);
 			System.out.println("\n"+Configuration.profileName+": Rendezvous status: "+rendezvousService.getRendezVousStatus()+"\n");
 		}
+/*
 		Configuration.discServ = Configuration.netPeerGroup.getDiscoveryService();		
 
 
@@ -93,7 +93,7 @@ public class Communication implements PipeMsgListener {
 		    Configuration.subPeerGroups[0] = Configuration.netPeerGroup.newGroup(null, peerGroupDiscovery, "irgendwie", "toll");
 		} catch (Throwable ta) {
 			
-		}
+		}*/
 		// Suche nach Gruppe
 		//Configuration.discServ.getRemoteAdvertisements(null, DiscoveryService.GROUP, attribute, null,10, listener);
 		// Suche nach Peer in Gruppe
@@ -105,7 +105,6 @@ public class Communication implements PipeMsgListener {
 	 */
 	public void pipeMsgEvent (PipeMsgEvent event) {
 		Message message = Message.fromXML(event.getMessage().getMessageElement("data").toString());
-		Logger.getAnonymousLogger().info(event.getMessage().getMessageElement("data").toString());
 		MessageServer.insertMessage(message);
 		System.out.println("\n"+Configuration.profileName+": New Message from "+message.getSender());
 	}

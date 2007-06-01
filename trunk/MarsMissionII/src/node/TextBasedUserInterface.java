@@ -26,7 +26,7 @@ public class TextBasedUserInterface {
 	
 	BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 	
-    String nodeName = "";
+    
     
 	Message message = new Message();
 	
@@ -34,7 +34,7 @@ public class TextBasedUserInterface {
 	 * Constructor
 	 */
 	public TextBasedUserInterface () {
-		System.out.println("Welcome to "+Configuration.project+" communication system\n");
+/*		System.out.println("Welcome to "+Configuration.project+" communication system\n");
 		System.out.print("Enter a profile name: ");
 		boolean error = false;
 		while (!error) {
@@ -42,10 +42,11 @@ public class TextBasedUserInterface {
 				Configuration.init(this.stdin.readLine());
 				error = false;
 			} catch (IOException ioe) {
+				System.out.println("Input Error");
 				error = true;
 			}
 		}
-	}
+	*/}
 	
 	/**
 	 * Menu point "Message sending"
@@ -102,8 +103,8 @@ public class TextBasedUserInterface {
 		try {
 			com.sendMessage(message);
 		} catch (Throwable ta) {
-			System.err.println("\n"+this.nodeName+": Fehler beim Senden!");
-			System.err.println("\n"+this.nodeName+": Error Message:");
+			System.err.println("Fehler beim Senden!");
+			System.err.println("Error Message:");
 			ta.printStackTrace();
 			System.err.println();
 		}
@@ -121,14 +122,14 @@ public class TextBasedUserInterface {
 		try {
 			String filePath = "";
 			String fileName = "";
-			System.out.print("\n"+this.nodeName+": Pfad eingeben (bei leerem Pfad wird der Standardpfad \""+Configuration.getProfilePath()+"\" genutzt:");
+			System.out.print("Pfad eingeben (bei leerem Pfad wird der Standardpfad \""+Configuration.getProfilePath()+"\" genutzt:");
 			filePath = this.stdin.readLine();
 			System.out.print("Dateiname: ");
 			fileName = this.stdin.readLine();
-			System.out.println("\n"+this.nodeName+": Nachicht aus "+filePath+fileName+" laden.");
+			System.out.println("Nachicht aus "+filePath+fileName+" laden.");
 			this.message = MessageFileOperations.loadFromFile(filePath+fileName);
 		} catch (IOException ioe) {
-			System.err.println("\n"+this.nodeName+": Fehler beim aden der Nachicht!");
+			System.err.println("Fehler beim aden der Nachicht!");
 			messageLoaded = false;
 		}
 		if (messageLoaded) {
@@ -136,10 +137,10 @@ public class TextBasedUserInterface {
 				this.com.openOutputPipe(this.message.getReceiver());
 				this.com.sendMessage(message);
 				this.com.closeOutputPipe();
-				System.out.println("\n"+this.nodeName+": Nachicht erfolgreich gesendet!");
+				System.out.println("Nachicht erfolgreich gesendet!");
 			} catch (Throwable ta) {
-				System.err.println("\n"+this.nodeName+": Fehler beim Senden!");
-				System.err.println("\n"+this.nodeName+": Error Message:");
+				System.err.println("Fehler beim Senden!");
+				System.err.println("Error Message:");
 				ta.printStackTrace();
 				System.err.println();
 			}
@@ -169,12 +170,12 @@ public class TextBasedUserInterface {
 	 */
 	private void disconnect () {
 		try {
-			System.out.print("\n"+this.nodeName+": Trennen der Verbindung ");
+			System.out.print("Trennen der Verbindung ");
 			com.disconnect();
 			System.out.println("erfolgreich!");
 		} catch (Throwable ta) {
 			System.err.println("nicht erfolgreich!");
-			System.err.println("\n"+this.nodeName+": Error Message:");
+			System.err.println("Error Message:");
 			ta.printStackTrace();
 			System.err.println();
 		}
@@ -219,31 +220,35 @@ public class TextBasedUserInterface {
 	 */
 	public void menu ()  {
 		boolean leave = false;
-		char choise = '0';
+		String choise = "";
 		while (!leave) {
 			if (!connected) {
-				System.out.println("Main menu\n");
+				System.out.println("\nMain menu\n");
 				System.out.println("1 - Connect");
 				System.out.println("2 - Show incoming messages");
-				System.out.println("3 - Exit");
+				System.out.println("3 - Exit\n");
+				System.out.print("Your choise: ");				
 				try {
-					choise = (char)stdin.read();
+					choise = stdin.readLine();
 
 				} catch (IOException ioe) {
-					choise = '0';
+					choise = "0";
 				}
-				switch ( choise ) {
+				switch ( choise.charAt(0) ) {
 				case '1' :
-					connect();
+					//connect();
 				case '2' :
-					showInMessages();
+					//showInMessages();
 				case '3' :
-					leave = true;
+					//leave = true;
 				default :
-					System.out.println("\\Wrong input!\n");
+					System.out.println("Wrong input!\n");
+
+					leave = false;
 				}
+				System.out.println(choise);
 			} else {
-				System.out.println("Main menu\n");
+				System.out.println("\nMain menu\n");
 				System.out.println("1 - Message sending");
 				System.out.println("2 - Show incoming messages");
 				System.out.println("3 - Group configuration");
@@ -251,12 +256,12 @@ public class TextBasedUserInterface {
 				System.out.println("5 - Exit\n");
 				System.out.print("Your choise: ");
 				try {
-					choise = (char)stdin.read();
+					choise = stdin.readLine();
 
 				} catch (IOException ioe) {
-					choise = '0';
+					choise = "0";
 				}
-				switch ( choise ) {
+				switch ( choise.charAt(0) ) {
 				case '1' :
 					sendMessage();
 					leave = false;
@@ -272,7 +277,7 @@ public class TextBasedUserInterface {
 				case '5' :
 					leave = true;
 				default :
-					System.out.println("\\Wrong input!\n");
+					System.out.println("Wrong input!\n");
 				}
 			}
 		}
@@ -284,6 +289,8 @@ public class TextBasedUserInterface {
 	 */
 	public static void main(String[] args) {
 		TextBasedUserInterface tbui = new TextBasedUserInterface();
+		Configuration.init("test");
 		tbui.menu();
+		
 	}
 }
