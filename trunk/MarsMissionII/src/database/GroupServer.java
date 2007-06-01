@@ -323,7 +323,8 @@ public class GroupServer {
 	}
 	
 	/**
-	 * get the nth tupel in database
+	 * get the nth tupel in database,
+	 * informatics like: numbering starts with Zero!!!
 	 * @param number: n
 	 * @return String: group name\nname
 	 */
