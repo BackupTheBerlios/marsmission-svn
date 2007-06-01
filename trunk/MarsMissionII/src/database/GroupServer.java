@@ -35,7 +35,7 @@ public class GroupServer {
 			Statement stmt = con.createStatement();
 			
 			String query = "CREATE TABLE Groups (" +
-					"message_nr integer IDENTITY PRIMARY KEY, " +
+					"nr integer IDENTITY PRIMARY KEY, " +
 					"name VARCHAR(20), " +
 					"groupname VARCHAR(20) )";
 			
@@ -329,6 +329,41 @@ public class GroupServer {
 	 */
 	public static String getTupelWithNumber(int number) {
 		String output = "";
+		
+		try {
+			Class.forName( "org.hsqldb.jdbcDriver" );
+		} catch (ClassNotFoundException e) {
+			System.err.println("Keine Treiber-Klasse!");
+			return "";
+		}
+		
+		Connection con = null;
+		
+		try {
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.getProfilePath()+"MarsDB;shutdown=true", "sa" , "");
+			
+			Statement stmt = con.createStatement();
+			
+			String query = "SELECT name, groupname FROM Groups A WHERE " +
+						   number + " = ( SELECT COUNT(*) FROM Groups B WHERE B.nr<A.nr) ORDER BY nr";  
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			if (rs.next()) {
+				output = rs.getString(2) + "\n" + rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
 		return output;
 	}
 	
@@ -424,6 +459,8 @@ public class GroupServer {
 		int i = GroupServer.getNumberOfGroups();
 		System.out.println("Number of Groups: " + i);
 		GroupServer.changeGroupFellowshipName("Apolda", "Chef");
+		String tmp = GroupServer.getTupelWithNumber(1);
+		System.out.println("Tupel 2: " + tmp);
 		GroupServer.deleteGroupFellowship("Sklave vom Dienst");
 		GroupServer.getAllGroups();
 		mem = GroupServer.checkGroupFellowship("Sklave vom Dienst");
