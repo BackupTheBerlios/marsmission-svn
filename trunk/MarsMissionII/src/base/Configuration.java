@@ -1,7 +1,8 @@
 package base;
 
 import java.io.IOException;
-import database.DatabaseServer;
+import database.GroupServer;
+import database.MessageServer;
 import net.jxta.discovery.DiscoveryService;
 import net.jxta.peergroup.PeerGroup;
 import net.jxta.pipe.InputPipe;
@@ -142,7 +143,8 @@ public class Configuration {
 			RendezvousList.addHostAdresses();
 		}
 		System.out.println("create connection to message database.");
-		DatabaseServer.createDatabase();		
+		GroupServer.createGroupDatabase();
+		MessageServer.createMessageDatabase();
 	}
 	
 	/**

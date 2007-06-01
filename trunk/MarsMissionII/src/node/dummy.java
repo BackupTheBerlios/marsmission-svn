@@ -6,7 +6,7 @@ package node;
  * Dummy zum Testen von Funktionen
  */
 
-import database.DatabaseServer;
+import database.MessageServer;
 import message.Message;
 import message.MessageFileOperations;
 import message.Queue;
@@ -123,7 +123,7 @@ public class dummy  {
 		printMessage(message);
 
 		System.out.println("Store message in Database");
-		DatabaseServer.insertMessage(message);
+		MessageServer.insertMessage(message);
 		
 		System.out.println("\nGenerate a new message.");
 		// creates a new message object
@@ -139,22 +139,22 @@ public class dummy  {
 		message.setType(message.commandType());
 
 		System.out.println("Store message in Database");
-		DatabaseServer.insertMessage(message);
+		MessageServer.insertMessage(message);
 		
 		System.out.println("\n\nNow print the messages in Database sorted by sender:\n");
-		DatabaseServer.getMessages(null,DatabaseServer.sortBySender);
+		MessageServer.getMessages(null,MessageServer.sortBySender);
 
 		System.out.println("\n\nNow print the messages in Database sorted by receiver:\n");
-		DatabaseServer.getMessages(null,DatabaseServer.sortByReceiver);
+		MessageServer.getMessages(null,MessageServer.sortByReceiver);
 
 		System.out.println("\n\nNow print the messages in Database sorted by time stamp:\n");
-		DatabaseServer.getMessages(null,DatabaseServer.sortByTimestamp);
+		MessageServer.getMessages(null,MessageServer.sortByTimestamp);
 		
 		System.out.println("\n\nNow print the messages in Database sorted by type:\n");
-		DatabaseServer.getMessages(null,DatabaseServer.sortByType);
+		MessageServer.getMessages(null,MessageServer.sortByType);
 
 		System.out.println("\nDelete Database");
-		DatabaseServer.deleteDatabase();
+		MessageServer.deleteMessageDatabase();
 		
 		String pathURI = "D:\\Dokumente und Einstellungen\\Windows\\Torsten Burschka\\";
 		System.out.println();

@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import database.DatabaseServer;
+import database.MessageServer;
 
 import base.Configuration;
 import net.jxta.discovery.DiscoveryService;
@@ -106,7 +106,7 @@ public class Communication implements PipeMsgListener {
 	public void pipeMsgEvent (PipeMsgEvent event) {
 		Message message = Message.fromXML(event.getMessage().getMessageElement("data").toString());
 		Logger.getAnonymousLogger().info(event.getMessage().getMessageElement("data").toString());
-		DatabaseServer.insertMessage(message);
+		MessageServer.insertMessage(message);
 		System.out.println("\n"+Configuration.profileName+": New Message from "+message.getSender());
 	}
 	
