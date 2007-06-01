@@ -6,8 +6,8 @@ import java.io.IOException;
 /**
  * Klasse zum Laden und Speichern der Konfiguration
  * 
- * @author Corinne Klimkeit
  * @author Ines Junold
+ * @author Corinne Klimkeit
  */
 public class konfig {
 
@@ -15,16 +15,6 @@ public class konfig {
 	 * Lokale Variable für die Konfigurationsdatei
 	 */
 	private static String fileName = "konfig.txt";
-	
-	/**
-	 * Lokale Variable für den Namen
-	 */
-	private static String name = "";
-	
-	/**
-	 * Lokale Variable für die Mailadresse
-	 */
-	private static String mailadress = "";
 	
 	/**
 	 * Lokale Variable für den Benutzernamen
@@ -57,12 +47,10 @@ public class konfig {
 	 * @param smtpserver
 	 *        SMTP Server
 	 */
-	public static void saveToFile(String name, String mailadress, String username, String password, String POPserver, String SMTPserver) {
+	public static void saveToFile(String username, String password, String POPserver, String SMTPserver) {
 		try {
 			FileWriter file = new FileWriter(fileName);
 			// Daten in die Datei schreiben
-			file.write("name="+name+"\n");
-			file.write("mailadress="+mailadress+"\n");
 			file.write("username="+username+"\n");
 			file.write("password="+password+"\n");
 			file.write("popserver="+POPserver+"\n");
@@ -83,44 +71,24 @@ public class konfig {
 		try {
 			FileReader file = new FileReader(fileName);
 			BufferedReader buffer = new BufferedReader(file);
-			for (int i=0; i < 5; i++) {
+			for (int i=0; i < 3; i++) {
 				// Auslesen aus der Datei
 				currentLine[i] = buffer.readLine();
 			}
 			buffer.close();
-			for (int i=0; i<5; i++) {
+			for (int i=0; i<3; i++) {
 				// Strings auf die richtige Länge kürzen 
 				currentLine[i] = currentLine[i].substring(currentLine[i].indexOf("=")+1);
 			}
 			// Strings an die lokalen Variablen übergeben
-			name       = currentLine[0];
-			mailadress = currentLine[1];
-			username   = currentLine[2];
-			password   = currentLine[3];
-			popserver  = currentLine[4];
-			smtpserver = currentLine[5];
+			username   = currentLine[0];
+			password   = currentLine[1];
+			popserver  = currentLine[2];
+			smtpserver = currentLine[3];
 		} catch (IOException ioe) {
 			System.err.println("Fehler beim laden der Konfiguration!");
 			ioe.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Gibt den Namen zurück
-	 * @return Name
-	 */
-	public static String getName() {
-		loadFromFile();
-		return name;
-	}
-	
-	/**
-	 * Gibt die Mailadresse zurück
-	 * @return Mailadresse
-	 */
-	public static String getMailAdress() {
-		loadFromFile();
-		return mailadress;
 	}
 	
 	/**

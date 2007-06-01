@@ -8,7 +8,7 @@ import javax.mail.internet.*;
 
 public class Aufgabe extends Frame 
 {
-	TextField eingabe, benutzername, passwort, pop3server, smtpserver;
+	TextField name, emailAdresse, benutzername, passwort, pop3server, smtpserver;
 	Label     ausgabe, hinweis, hinweis2;
 	Frame allg = new Frame("allg");
 	Frame pop3frame = new Frame("pop3");
@@ -118,12 +118,18 @@ public class Aufgabe extends Frame
 		//Festlegen des Titels des Fensters
 		allg.setTitle("Allgemeine Kontoinformationen");  
 		//Fenstergröße einstellen
-		allg.setSize(355,170); //350,100
-		GridLayout gl = new GridLayout (6,2); //zeilenanzahl, spaltenanzahl
+		allg.setSize(340,170); //350,100
+		GridLayout gl = new GridLayout (7,2); //zeilenanzahl, spaltenanzahl
 		allg.setLayout(gl);
-		allg.add(new Label("Bitte die Eingabe immer mit EN"));
-		allg.add(new Label("TER bestätigen"));
 		//Einfügen der Labels und Textfelder
+		allg.add(new Label("Ihr Name:"));
+		name = new TextField(5);
+		allg.add(name);
+		
+		allg.add(new Label("Ihre eMailadresse:"));
+		emailAdresse = new TextField(5);
+		allg.add(emailAdresse);
+		
 		allg.add(new Label("Username:"));
 		benutzername = new TextField(5);
 		allg.add(benutzername);
@@ -157,7 +163,6 @@ public class Aufgabe extends Frame
 				allg.dispose();
 			 }
 		});
-		
 	
 		
 		
