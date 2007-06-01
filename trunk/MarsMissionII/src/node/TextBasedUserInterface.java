@@ -128,7 +128,7 @@ public class TextBasedUserInterface {
 			System.out.println("\n"+this.nodeName+": Nachicht aus "+filePath+fileName+" laden.");
 			this.message = MessageFileOperations.loadFromFile(filePath+fileName);
 		} catch (IOException ioe) {
-			System.err.println("\n"+this.nodeName+": Fehler beim laden der Nachicht!");
+			System.err.println("\n"+this.nodeName+": Fehler beim aden der Nachicht!");
 			messageLoaded = false;
 		}
 		if (messageLoaded) {
@@ -224,10 +224,11 @@ public class TextBasedUserInterface {
 			if (!connected) {
 				System.out.println("Main menu\n");
 				System.out.println("1 - Connect");
-				System.out.println("2 - Exit");
+				System.out.println("2 - Show incoming messages");
+				System.out.println("3 - Exit");
 				try {
 					choise = (char)stdin.read();
-					
+
 				} catch (IOException ioe) {
 					choise = '0';
 				}
@@ -235,6 +236,8 @@ public class TextBasedUserInterface {
 				case '1' :
 					connect();
 				case '2' :
+					showInMessages();
+				case '3' :
 					leave = true;
 				default :
 					System.out.println("\\Wrong input!\n");
@@ -249,7 +252,7 @@ public class TextBasedUserInterface {
 				System.out.print("Your choise: ");
 				try {
 					choise = (char)stdin.read();
-					
+
 				} catch (IOException ioe) {
 					choise = '0';
 				}
@@ -271,7 +274,6 @@ public class TextBasedUserInterface {
 				default :
 					System.out.println("\\Wrong input!\n");
 				}
-				
 			}
 		}
 	}

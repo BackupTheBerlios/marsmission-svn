@@ -56,7 +56,7 @@ public class RendezvousList {
 	 * @return
 	 *      protocol
 	 */
-	public String getProtocol() {
+	public static String getProtocol() {
 		return rendezvousProtocol;
 	}
 	
@@ -65,7 +65,7 @@ public class RendezvousList {
 	 * @return
 	 *      port
 	 */
-	public int getPort() {
+	public static int getPort() {
 		return rendezvousPort;
 	}
 	
