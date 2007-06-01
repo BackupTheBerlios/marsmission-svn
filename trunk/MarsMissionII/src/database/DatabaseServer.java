@@ -414,6 +414,40 @@ public class DatabaseServer {
 	 */
 	public static int getNumberOfGroups() {
 		int number = 0;
+		
+		try {
+			Class.forName( "org.hsqldb.jdbcDriver" );
+		} catch (ClassNotFoundException e) {
+			System.err.println("Keine Treiber-Klasse!");
+			return 0;
+		}
+		
+		Connection con = null;
+		
+		try {
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.getProfilePath()+"MarsDB;shutdown=true", "sa" , "");
+			
+			Statement stmt = con.createStatement();
+			
+			String query = "SELECT COUNT(*) FROM Groups";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while (rs.next()) {
+				number = Integer.parseInt(rs.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
 		return number;
 	}
 	
@@ -432,6 +466,10 @@ public class DatabaseServer {
 		Message newMess = new Message();;
 		DatabaseServer.saveInMessage(2, newMess);
 		DatabaseServer.addGroupFellowship("Steffen", "Apolda");
-//		DatabaseServer.deleteDatabase();
+		DatabaseServer.addGroupFellowship("Torsten", "Lord of JXTA");
+		DatabaseServer.addGroupFellowship("Marian", "Sklave vom Dienst");
+		int i = DatabaseServer.getNumberOfGroups();
+		System.out.println("Number of Groups: " + i);
+		DatabaseServer.deleteDatabase();
 	}
 }
