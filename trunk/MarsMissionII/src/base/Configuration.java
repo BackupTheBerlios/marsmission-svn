@@ -39,19 +39,46 @@ public class Configuration {
 	 */
 	public static String password = "mars2007";
 	
+	/**
+	 * Name of the rendezvous file
+	 */
 	public static String rendezvousFile = "rdv.lst";
 	
+	/**
+	 * Name of the relay File
+	 */
 	public static String relayFile = "rly.lst";
 	
+	/**
+	 * The global path
+	 */
 	private static String globalPath = "";
 	
+	/**
+	 * The profile path
+	 */
 	private static String profilePath = "";
 	
 	/**
 	 * PeerGroup
 	 */
 	public static PeerGroup netPeerGroup = null;
+	
+	/**
+	 * Max of subPeerGroups
+	 */
+	private static int maxSubPeerGroups = 5;
+	
+	/**
+	 * Array of subPeerGroups - maxSubPeergroups are supported
+	 */
+	public static PeerGroup subPeerGroups[] = new PeerGroup[maxSubPeerGroups];
 
+	/**
+	 * Number of subPeerGroups, which acutally used
+	 */
+	public static int subPeerGroupsUsed = 0;
+	
 	/**
 	 * Stores the configuration
 	 */
@@ -192,11 +219,27 @@ public class Configuration {
 		}
 	}
 
+	/**
+	 * Returns the global path
+	 * @return the global path
+	 */
 	public static String getGlobalPath() {
 		return globalPath;
 	}
 
+	/**
+	 * Returns the profile path
+	 * @return the profile path
+	 */
 	public static String getProfilePath() {
 		return profilePath;
+	}
+	
+	/**
+	 * Returns the max number of subPeerGroups
+	 * @return the max number of subPeerGroups
+	 */
+	public static int getMaxSubPeerGroups() {
+		return maxSubPeerGroups;
 	}
 }

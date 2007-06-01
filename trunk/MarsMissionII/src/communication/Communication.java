@@ -10,14 +10,17 @@ import java.util.logging.Logger;
 import database.DatabaseServer;
 
 import base.Configuration;
+import net.jxta.discovery.DiscoveryService;
 import net.jxta.document.AdvertisementFactory;
 import net.jxta.document.MimeMediaType;
 import net.jxta.endpoint.StringMessageElement;
 import net.jxta.exception.PeerGroupException;
 import net.jxta.peergroup.NetPeerGroupFactory;
+import net.jxta.peergroup.PeerGroup;
 import net.jxta.pipe.PipeMsgEvent;
 import net.jxta.pipe.PipeMsgListener;
 import net.jxta.pipe.PipeService;
+import net.jxta.protocol.ModuleImplAdvertisement;
 import net.jxta.protocol.PipeAdvertisement;
 import net.jxta.rendezvous.RendezVousService;
 import net.jxta.rendezvous.RendezvousEvent;
@@ -82,6 +85,19 @@ public class Communication implements PipeMsgListener {
 			rendezvousService.setAutoStart(true);
 			System.out.println("\n"+Configuration.profileName+": Rendezvous status: "+rendezvousService.getRendezVousStatus()+"\n");
 		}
+		Configuration.discServ = Configuration.netPeerGroup.getDiscoveryService();		
+
+
+		try {
+			ModuleImplAdvertisement peerGroupDiscovery = Configuration.netPeerGroup.getAllPurposePeerGroupImplAdvertisement();
+		    Configuration.subPeerGroups[0] = Configuration.netPeerGroup.newGroup(null, peerGroupDiscovery, "irgendwie", "toll");
+		} catch (Throwable ta) {
+			
+		}
+		// Suche nach Gruppe
+		//Configuration.discServ.getRemoteAdvertisements(null, DiscoveryService.GROUP, attribute, null,10, listener);
+		// Suche nach Peer in Gruppe
+		//discServ.getRemoteAdvertisements(null,DiscoveryService.PEER, attribute, value, threshold);
 	}
 
 	/**
@@ -182,7 +198,7 @@ public class Communication implements PipeMsgListener {
 		}
 		Configuration.pipeServ = Configuration.netPeerGroup.getPipeService();
 		try {
-			/*InputPipe*/ Configuration.inputPipe = Configuration.pipeServ.createInputPipe(Configuration.pipeAdv,this);
+			Configuration.inputPipe = Configuration.pipeServ.createInputPipe(Configuration.pipeAdv,this);
 			System.out.println("\n"+Configuration.profileName+": Successfully created inputPipe.");
 		} catch (IOException ioe) {
 			System.err.println("\n"+Configuration.profileName+": Pipe creation failed!");
