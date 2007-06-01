@@ -13,7 +13,7 @@ import base.Configuration;
 
 /**
  * Class for Database Connectivity
- * @author Steffen
+ * @author Steffen Boettcher
  *
  */
 public class DatabaseServer {
@@ -39,7 +39,8 @@ public class DatabaseServer {
 	public static final int sortByType = 3;
 	
 	/**
-	 * create database for messages
+	 * create database tables:
+	 * Messages, Groups
 	 *
 	 */
 	public static void createDatabase() {
@@ -115,6 +116,10 @@ public class DatabaseServer {
 			
 			stmt.execute(query);
 			
+			query = "DROP TABLE Groups";
+
+			stmt.execute(query);
+			
 			System.out.println("\nDatabase deleted successfully.\n");
 			
 		} catch (SQLException e) {
@@ -178,10 +183,9 @@ public class DatabaseServer {
 	}
 	
 	/**
-	 * get all messages from database
+	 * get messages from database
 	 * 
-	 * @param sender
-	 *        node which messages should be shown (null = show all messages in database)
+	 * @param sender: node which messages should be shown (null = show all messages in database)
 	 */
 	public static void getMessages(String sender, int sort) {
 		try {
@@ -321,8 +325,21 @@ public class DatabaseServer {
 		return input; 
 	}
 	
-//	public static void deleteGroupFellowship(String group)
-//	public static boolean checkGroupFellowship(String group)
+	/**
+	 * delete group Fellowship
+	 * @param group: group name which fellowship will be deleted 
+	 */
+	public static void deleteGroupFellowship(String group) {
+		
+	}
+	
+	/**
+	 * check if node is member of a group
+	 * @param group: group name which is to check 
+	 */
+	public static boolean checkGroupFellowship(String group) {
+		return true;
+	}
 	
 	/**
 	 * store a reference name to a group in database
@@ -362,8 +379,24 @@ public class DatabaseServer {
 				}
 		}
 	}
-//	public static void changeGroupFellowshipName(String group, String newName)
-//	public static String getGroupFellowshipName(String group)
+
+	/**
+	 * new user name in group
+	 * @param group: groupname
+	 * @param newName: new name of the node
+	 */
+	public static void changeGroupFellowshipName(String group, String newName) {
+		
+	}
+	
+	/**
+	 * get node name in a certain group
+	 * @param group: group name
+	 */
+	public static String getGroupFellowshipName(String group) {
+		String output = "";
+		return output;
+	}
 	
 	public static void main(String[] args) {
 		DatabaseServer.createDatabase();
@@ -380,6 +413,6 @@ public class DatabaseServer {
 		Message newMess = new Message();;
 		DatabaseServer.saveInMessage(2, newMess);
 		DatabaseServer.addGroupFellowship("Steffen", "Apolda");
-		DatabaseServer.deleteDatabase();
+//		DatabaseServer.deleteDatabase();
 	}
 }
