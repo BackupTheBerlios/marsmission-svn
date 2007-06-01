@@ -267,6 +267,56 @@ public class DatabaseServer {
 		}
 	}
 	
+	public static void getAllGroups() {
+		try {
+			Class.forName( "org.hsqldb.jdbcDriver" );
+		} catch (ClassNotFoundException e) {
+			System.err.println("Keine Treiber-Klasse!");
+			return;
+		}
+		
+		Connection con = null;
+		
+		try {
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.getProfilePath()+"MarsDB;shutdown=true", "sa" , "");
+			
+			Statement stmt = con.createStatement();
+			
+			String query = "SELECT * FROM Groups";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			/*System.out.println("Nr\tReceiver\tReceivergroup\tSender" + 
+							"\tSendergroup\tTimestamp\tData\tType\n");*/
+			
+			System.out.print(format("Nr", 5));
+			System.out.print(format("Name", 20));
+			System.out.println(format("Groupname", 20));
+			
+			System.out.print(format("==", 5));
+			System.out.print(format("========", 20));
+			System.out.println(format("=============", 20));
+			
+			
+			while (rs.next())
+            {
+				System.out.print(format(rs.getString(1), 5));
+				System.out.print(format(rs.getString(2), 20));
+				System.out.println(format(rs.getString(3), 20));
+            }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+	
 	public static boolean saveInMessage(int pnr, Message mess) {
 		try {
 			Class.forName( "org.hsqldb.jdbcDriver" );
@@ -386,7 +436,38 @@ public class DatabaseServer {
 	 * @param newName: new name of the node
 	 */
 	public static void changeGroupFellowshipName(String group, String newName) {
+		try {
+			Class.forName( "org.hsqldb.jdbcDriver" );
+		} catch (ClassNotFoundException e) {
+			System.err.println("Keine Treiber-Klasse!");
+			return;
+		}
 		
+		Connection con = null;
+		
+		try {
+			con = DriverManager.getConnection( "jdbc:hsqldb:"+Configuration.getProfilePath()+"MarsDB;shutdown=true", "sa" , "");
+			
+			Statement stmt = con.createStatement();
+			
+			String query = "UPDATE Groups SET name='" +
+						   newName + "' WHERE groupname='" +
+						   group + "'";
+			
+			stmt.execute(query);
+			
+			System.out.println("\nNode name changed.\n");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 	}
 	
 	/**
@@ -410,7 +491,7 @@ public class DatabaseServer {
 	
 	/**
 	 * get number of groups where a node is member
-	 * @return int
+	 * @return integer
 	 */
 	public static int getNumberOfGroups() {
 		int number = 0;
@@ -468,8 +549,11 @@ public class DatabaseServer {
 		DatabaseServer.addGroupFellowship("Steffen", "Apolda");
 		DatabaseServer.addGroupFellowship("Torsten", "Lord of JXTA");
 		DatabaseServer.addGroupFellowship("Marian", "Sklave vom Dienst");
+		DatabaseServer.getAllGroups();
 		int i = DatabaseServer.getNumberOfGroups();
 		System.out.println("Number of Groups: " + i);
+		DatabaseServer.changeGroupFellowshipName("Apolda", "Chef");
+		DatabaseServer.getAllGroups();
 		DatabaseServer.deleteDatabase();
 	}
 }
