@@ -382,7 +382,7 @@ public class DatabaseServer {
 
 	/**
 	 * new user name in group
-	 * @param group: groupname
+	 * @param group: group name
 	 * @param newName: new name of the node
 	 */
 	public static void changeGroupFellowshipName(String group, String newName) {
@@ -396,6 +396,25 @@ public class DatabaseServer {
 	public static String getGroupFellowshipName(String group) {
 		String output = "";
 		return output;
+	}
+	
+	/**
+	 * get the nth tupel in database
+	 * @param number: n
+	 * @return String: group name\nname
+	 */
+	public static String getTupelWithNumber(int number) {
+		String output = "";
+		return output;
+	}
+	
+	/**
+	 * get number of groups where a node is member
+	 * @return int
+	 */
+	public static int getNumberOfGroups() {
+		int number = 0;
+		return number;
 	}
 	
 	public static void main(String[] args) {
