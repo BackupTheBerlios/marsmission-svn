@@ -109,6 +109,11 @@ public class Communication implements PipeMsgListener {
 		System.out.println("\n"+Configuration.profileName+": New Message from "+message.getSender());
 	}
 	
+	public PipeAdvertisement getPipeAdvertisement (String groupName, String nodeName) {
+		PipeAdvertisement returnPipeAdvertisement = null;
+		return returnPipeAdvertisement;
+	}
+	
 	/**
 	 * Write out the own PipeAdverisement in a file
 	 * 
