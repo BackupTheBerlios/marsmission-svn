@@ -107,8 +107,10 @@ public class GroupServer {
 	
 	/**
 	 * method needed for table output
-	 * @param input: String
-	 * @param size: size of the output string
+	 * @param input
+	 *        String
+	 * @param size
+	 *        size of the output string
 	 * @return
 	 */
 	private static String format(String input, int size) {
@@ -119,7 +121,8 @@ public class GroupServer {
 	
 	/**
 	 * delete group fellowship
-	 * @param group: group name which fellowship will be deleted 
+	 * @param group
+	 *        group name which fellowship will be deleted 
 	 */
 	public static void deleteGroupFellowship(String group) {
 		try {
@@ -157,7 +160,8 @@ public class GroupServer {
 	
 	/**
 	 * check if node is member of a group
-	 * @param group: group name which is to check 
+	 * @param group
+	 *        group name which is to check 
 	 */
 	public static boolean checkGroupFellowship(String group) {
 		boolean member = false;
@@ -203,8 +207,10 @@ public class GroupServer {
 	
 	/**
 	 * store a reference name to a group in database
-	 * @param name: reference name
-	 * @param group: group name 
+	 * @param name
+     *        reference name
+	 * @param group
+	 *        group name 
 	 */
 	public static void addGroupFellowship(String name, String group) {
 		try {
@@ -242,8 +248,10 @@ public class GroupServer {
 
 	/**
 	 * new user name in group
-	 * @param group: group name
-	 * @param newName: new name of the node
+	 * @param group
+	 *        group name
+	 * @param newName
+	 *        new name of the node
 	 */
 	public static void changeGroupFellowshipName(String group, String newName) {
 		try {
@@ -282,7 +290,8 @@ public class GroupServer {
 	
 	/**
 	 * get node name in a certain group
-	 * @param group: group name
+	 * @param group
+	 *        group name
 	 */
 	public static String getGroupFellowshipName(String group) {
 		String output = "";
@@ -325,8 +334,10 @@ public class GroupServer {
 	/**
 	 * get the nth tupel in database,
 	 * informatics like: numbering starts with Zero!!!
-	 * @param number: n
-	 * @return String: group name\nname
+	 * @param number
+	 *        n
+	 * @return String
+	 *         group name \n name
 	 */
 	public static String getTupelWithNumber(int number) {
 		String output = "";

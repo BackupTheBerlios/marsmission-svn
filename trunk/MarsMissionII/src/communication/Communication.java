@@ -112,7 +112,8 @@ public class Communication implements PipeMsgListener {
 	/**
 	 * Write out the own PipeAdverisement in a file
 	 * 
-	 * @param pipe advertisement
+	 * @param pipeAdv
+	 *        advertisement
 	 */
 	public void storePipeAdvertisement(PipeAdvertisement pipeAdv) throws IOException {
 		try {

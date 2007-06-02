@@ -42,7 +42,6 @@ public class MessageServer {
 	/**
 	 * create database tables:
 	 * Messages, Groups
-	 *
 	 */
 	public static void createMessageDatabase() {
 		try {
@@ -174,8 +173,8 @@ public class MessageServer {
 	
 	/**
 	 * get messages from database
-	 * 
-	 * @param sender: node which messages should be shown (null = show all messages in database)
+	 * @param sender
+	 *        node which messages should be shown (null = show all messages in database)
 	 */
 	public static void getMessages(String sender, int sort) {
 		try {
@@ -256,8 +255,10 @@ public class MessageServer {
 	
 	/**
 	 * method needed for table output
-	 * @param input: String
-	 * @param size: size of the output string
+	 * @param input
+	 *        String
+	 * @param size
+	 *        size of the output string
 	 * @return
 	 */
 	private static String format(String input, int size) {
@@ -268,9 +269,11 @@ public class MessageServer {
 	
 	/**
 	 * get message from database
-	 * @param pnr: message primary key
-	 * @param mess: message to save
-	 * @return
+	 * @param pnr
+	 *        message primary key
+	 * @param mess
+	 *        message to save
+	 * @return true if messages was saved
 	 */
 	public static boolean saveInMessage(int pnr, Message mess) {
 		try {
