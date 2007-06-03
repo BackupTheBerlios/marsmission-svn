@@ -87,7 +87,7 @@ public class Aufgabe1 extends Frame
 	
 	//Fenster für die allgemeinen Kontoinformationen
 	public void daten(){	
-		emailAdresse = konfig.getemailAdresse();
+		name.setText(konfig.getName());
 		allg = new Frame("allg");
 		allg.setVisible(true);
 		//Festlegen des Titels des Fensters
@@ -98,7 +98,7 @@ public class Aufgabe1 extends Frame
 		allg.setLayout(gl);
 		//Einfügen der Labels und Textfelder
 		allg.add(new Label("Ihr Name:"));
-		name = new TextField(5);
+		name = new TextField(50);
 		allg.add(name);
 		
 		allg.add(new Label("Ihre eMailadresse:"));
@@ -129,7 +129,7 @@ public class Aufgabe1 extends Frame
 		//bei Klick auf den Button "OK" wird das Fenster "Allgemeine Kontoinformationen" geschlossen
 		b.addActionListener(new ActionListener(){
 			public void actionPerformed( ActionEvent e ){
-				konfig.saveToFile(name.toString(), emailAdresse.toString(), username.toString(), passwort.toString(), pop3server.toString(), smtpserver.toString());
+				konfig.saveToFile(name.getText(), emailAdresse.getText(), username.getText(), passwort.getText(), pop3server.getText(), smtpserver.getText());
 				setVisible(true);
 				allg.dispose();
 			 }
@@ -193,7 +193,7 @@ public class Aufgabe1 extends Frame
 	        mystore = mysession.getStore("pop3");
 	        
 	        //Verbindungsaufbau zum angegebenen POP3-Server mit dem Username und dem Passwort
-	          mystore.connect(pop3server.toString(), username.toString(), passwort.toString());
+	          //mystore.connect(pop3server, username, passwort);
 	          //System.out.println("Verbindung hergestellt");
 	          
 	          //Navigieren in der Baumhierarchie -> Finden des INBOX-Folders 

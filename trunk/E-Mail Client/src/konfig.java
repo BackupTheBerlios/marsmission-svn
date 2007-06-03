@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -89,11 +88,11 @@ public class konfig {
 	 */
 	private static void loadFromFile() {
 		// Array zum Speichern der eingelesenen Strings
-		String[] currentLine = new String[4];
+		String[] currentLine = new String[6];
 		try {
 			FileReader file = new FileReader(fileName);
 			BufferedReader buffer = new BufferedReader(file);
-			for (int i=0; i < 5; i++) {
+			for (int i=0; i <= 5; i++) {
 				// Auslesen aus der Datei
 				currentLine[i] = buffer.readLine();
 			}
