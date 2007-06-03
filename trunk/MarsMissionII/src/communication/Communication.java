@@ -81,7 +81,8 @@ public class Communication implements PipeMsgListener {
 //			openInputPipe();
 		} else {
 			System.out.println("\n"+Configuration.profileName+": No rendezvous server found. Node will now act as rendezvous server.");
-			rendezvousService.setAutoStart(true);
+			//rendezvousService.setAutoStart(true);
+			Configuration.setAsRendezvous();
 			System.out.println("\n"+Configuration.profileName+": Rendezvous status: "+rendezvousService.getRendezVousStatus()+"\n");
 		}
 /*

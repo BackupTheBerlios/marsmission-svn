@@ -169,7 +169,7 @@ public class Configuration {
 		configuration.setTcpPort(9702);
 		configuration.setTcpEndPort(9702);
 		configuration.setTcpStartPort(9702);
-		configuration.setUseOnlyRelaySeeds(false);
+		configuration.setUseOnlyRelaySeeds(true);
 		configuration.setMode(NetworkConfigurator.TCP_CLIENT
 				+ NetworkConfigurator.TCP_SERVER);
 		try {
