@@ -22,9 +22,10 @@ public class Connect implements RendezvousListener {
 	
 	public Connect(String nodeName) {
 		NetworkManager manager = null;
-		
-	    try {
-	        File home = new File("."+nodeName);
+
+		try {
+			System.setProperty("net.jxta.logging.Logging","SEVERE");
+			File home = new File("."+nodeName);
 	        manager = new NetworkManager(ConfigMode.EDGE,nodeName,home.toURI());
 	        System.out.println(nodeName+": Starting JXTA");
 	        manager.startNetwork();
