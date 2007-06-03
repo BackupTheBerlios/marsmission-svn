@@ -8,7 +8,6 @@ import net.jxta.platform.NetworkManager.ConfigMode;
 import net.jxta.rendezvous.RendezvousEvent;
 import net.jxta.rendezvous.RendezvousListener;
 
-
 public class Connect implements RendezvousListener {
 	
 	public void rendezvousEvent(RendezvousEvent event) {
@@ -24,17 +23,13 @@ public class Connect implements RendezvousListener {
 		NetworkManager manager = null;
 
 		try {
-			System.setProperty("net.jxta.logging.Logging","SEVERE");
+			System.setProperty("net.jxta.logging.Logging", "FINEST");
+			System.setProperty("net.jxta.level", "FINEST");
+			System.setProperty("java.util.logging.config.file", "logging.properties");
 			File home = new File("."+nodeName);
-	        manager = new NetworkManager(ConfigMode.EDGE,nodeName,home.toURI());
-	        System.out.println(nodeName+": Starting JXTA");
+	        manager = new NetworkManager(ConfigMode.RENDEZVOUS,nodeName,home.toURI());
+	        System.out.println(nodeName+": Starting RENDEZVOUS");
 	        manager.startNetwork();
-	        System.out.println(nodeName+": JXTA Started");
-	        boolean connected = manager.waitForRendezvousConnection(10000);
-	        if (!connected) {
-	        	System.out.println("Set as Rendezvous");
-	        	manager.setMode(ConfigMode.RENDEZVOUS);
-	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        System.exit(-1);
