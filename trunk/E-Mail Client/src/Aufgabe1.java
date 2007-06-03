@@ -6,16 +6,14 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-public class Aufgabe extends Frame 
+public class Aufgabe1 extends Frame 
 {
-	TextField name, emailAdresse, benutzername, passwort, pop3server, smtpserver;
+	TextField name, emailAdresse, username, passwort, pop3server, smtpserver;
 	Label     ausgabe, hinweis, hinweis2;
-	Frame allg;// = new Frame("allg");
-	Frame pop3frame = new Frame("pop3");
-	Frame smtpframe = new Frame("smtp");
-	String username, password, pop3;
+	Frame allg, abrufen;
+	//String username, password, pop3;
 	
-	public Aufgabe () 
+	public Aufgabe1 () 
 	{
 		//Fenstertitel setzen  
 		setTitle("Ein selbstprogrammierter Email-Client");  
@@ -45,10 +43,6 @@ public class Aufgabe extends Frame
 		abrufen.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(e.getActionCommand().equals("... abrufen von Konto xy")){
-					/*hinweis = new Label("Abrufen vom Konto XY");
-					add( BorderLayout.CENTER, hinweis );
-					//Empfang.main(new String[0]);
-					setVisible(true);*/
 					empfang();
 			}}});
 		
@@ -74,35 +68,14 @@ public class Aufgabe extends Frame
 		
 		//Erstellung eines Menüpunktes "Kontoinformationen"
 		Menu kontoinfos = new Menu("Kontoinformationen");
-		MenuItem allgemein = new MenuItem("Allgemeines");
+		MenuItem allgemein = new MenuItem("Daten");
 		kontoinfos.add(allgemein);
 		//bei Klick auf Menüpunkt "Kontoinformationen" Aktion
 		allgemein.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				if(e.getActionCommand().equals("Allgemeines")){
-					kontoinfosallgemein();
-				}
-			}});
-		
-		//Erstellung eines Menüpunktes "POP3"
-		MenuItem pop3 = new MenuItem("POP3");
-		kontoinfos.add(pop3);
-		//bei Klick auf Menüpunkt "POP3" Aktion
-		pop3.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				if(e.getActionCommand().equals("POP3")){
-					kontoinfospop3();
-				}
-			}});
-		
-		//Erstellung eines Menüpunktes "SMTP"
-		MenuItem smtp = new MenuItem("SMTP");
-		kontoinfos.add(smtp);
-		//bei Klick auf Menüpunkt "SMTP" Aktion
-		smtp.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				if(e.getActionCommand().equals("SMTP")){
-					kontoinfossmtp();
+				if(e.getActionCommand().equals("Daten")){
+					setVisible(false);
+					daten();
 				}
 			}});
 		
@@ -113,14 +86,15 @@ public class Aufgabe extends Frame
 	}
 	
 	//Fenster für die allgemeinen Kontoinformationen
-	public void kontoinfosallgemein(){	
+	public void daten(){	
+		emailAdresse = konfig.getemailAdresse();
 		allg = new Frame("allg");
 		allg.setVisible(true);
 		//Festlegen des Titels des Fensters
-		allg.setTitle("Allgemeine Kontoinformationen");  
+		allg.setTitle("Daten");  
 		//Fenstergröße einstellen
-		allg.setSize(340,170); //350,100
-		GridLayout gl = new GridLayout (7,2); //zeilenanzahl, spaltenanzahl
+		allg.setSize(320,220); //350,100
+		GridLayout gl = new GridLayout (9,2); //zeilenanzahl, spaltenanzahl
 		allg.setLayout(gl);
 		//Einfügen der Labels und Textfelder
 		allg.add(new Label("Ihr Name:"));
@@ -132,24 +106,21 @@ public class Aufgabe extends Frame
 		allg.add(emailAdresse);
 		
 		allg.add(new Label("Username:"));
-		benutzername = new TextField(5);
-		allg.add(benutzername);
+		username = new TextField(5);
+		allg.add(username);
 		
-		//username = benutzername.getText();
-		
-		//System.out.println("Username drin: " + username);
-		/*ausgabe = new Label();
-		allg.add(ausgabe);
-		benutzername.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//ausgabe.setText( "Text: " + benutzername.getText() );
-				
-				//String username = benutzername.getText();
-				//System.out.println("drin: " + username);
-			}});*/
 		allg.add(new Label("Passwort:"));
 		passwort = new TextField(5);
 		allg.add(passwort);
+		
+		allg.add(new Label("pop3 Server:"));
+		pop3server = new TextField(5);
+		allg.add(pop3server);
+		
+		allg.add(new Label("smtp Server:"));
+		smtpserver = new TextField(5);
+		allg.add(smtpserver);
+		
 		allg.add(new Label("bitte mit Klick auf den"));
 		allg.add(new Label(""));
 		allg.add(new Label("Button bestätigen"));
@@ -158,87 +129,14 @@ public class Aufgabe extends Frame
 		//bei Klick auf den Button "OK" wird das Fenster "Allgemeine Kontoinformationen" geschlossen
 		b.addActionListener(new ActionListener(){
 			public void actionPerformed( ActionEvent e ){
-				//allg.setVisible(false);
-				/*String username = benutzername.getText();
-				System.out.println("nicht drin: " + username);*/
+				konfig.saveToFile(name.toString(), emailAdresse.toString(), username.toString(), passwort.toString(), pop3server.toString(), smtpserver.toString());
+				setVisible(true);
 				allg.dispose();
 			 }
 		});
-	
-		
-		
-		/*eingabe = new TextField(5);
-		allg.add(BorderLayout.NORTH,eingabe);
-
-		ausgabe = new Label();
-		 allg.add( BorderLayout.SOUTH,  ausgabe );
-		eingabe.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				ausgabe.setText( "Der eingelesene Text lautet: " + eingabe.getText() );
-				
-			}});*/
-		//allg.setVisible(true);
 		//EventListener für das Fenster hinzufügen
 		//notwendig, damit das Fenster geschlossen werden kann
 		allg.addWindowListener(new AktFensterSchliessen());
-	}
-
-	//Fenster für die POP3 Kontoinformationen
-	public void kontoinfospop3(){
-		pop3frame.setTitle("pop3 Informationen");  
-		//Fenstergröße einstellen
-		pop3frame.setSize(350,90);
-		GridLayout gl = new GridLayout (3,2); //zeilenanzahl, spaltenanzahl
-		pop3frame.setLayout(gl);
-		
-		pop3frame.add(new Label("pop3 Server:"));
-		pop3server = new TextField(5);
-		pop3frame.add(pop3server);
-		pop3frame.add(new Label("bitte mit Klick auf den"));
-		pop3frame.add(new Label(""));
-		pop3frame.add(new Label("Button bestätigen"));
-		Button b = new Button("OK");
-		pop3frame.add(b);
-		pop3frame.setVisible(true);
-		//bei Klick auf den Button "OK" wird das Fenster "Allgemeine Kontoinformationen" geschlossen
-		b.addActionListener(new ActionListener(){
-			public void actionPerformed( ActionEvent e ){
-				//allg.setVisible(false);
-				pop3frame.dispose();
-			 }
-		});
-		//EventListener für das Fenster hinzufügen
-		//notwendig, damit das Fenster geschlossen werden kann
-		pop3frame.addWindowListener(new AktFensterSchliessen());
-	}
-
-	//Fenster für die SMTP Kontoinformationen
-	public void kontoinfossmtp(){
-		smtpframe.setTitle("smtp Informationen");  
-		//Fenstergröße einstellen
-		smtpframe.setSize(350,80);
-		GridLayout gl = new GridLayout (3,2); //zeilenanzahl, spaltenanzahl
-		smtpframe.setLayout(gl);
-		
-		smtpframe.add(new Label("smtp Server:"));
-		smtpserver = new TextField(5);
-		smtpframe.add(smtpserver);
-		smtpframe.add(new Label("bitte mit Klick auf den"));
-		smtpframe.add(new Label(""));
-		smtpframe.add(new Label("Button bestätigen"));
-		Button b = new Button("OK");
-		smtpframe.add(b);
-		smtpframe.setVisible(true);
-		//bei Klick auf den Button "OK" wird das Fenster "Allgemeine Kontoinformationen" geschlossen
-		b.addActionListener(new ActionListener(){
-			public void actionPerformed( ActionEvent e ){
-				//allg.setVisible(false);
-				smtpframe.dispose();
-			 }
-		});
-		//EventListener für das Fenster hinzufügen
-		//notwendig, damit das Fenster geschlossen werden kann
-		smtpframe.addWindowListener(new AktFensterSchliessen());
 	}
 	
 	//Methode zum Einlesen von Strings
@@ -260,7 +158,7 @@ public class Aufgabe extends Frame
 	    String antwort = "";
 	    int antwort2;
 	    //String username = "";
-	    String internetadresse = "";
+	    //String internetadresse = "";
 	    //String passwort = "";
 	    Store mystore = null;
 	    Session mysession;
@@ -271,7 +169,7 @@ public class Aufgabe extends Frame
 	    
 	    //  System.out.println("Dies ist ein Programm zum Abrufen von Mails mittels der JavaMailAPI");  
 	       
-	      //Eingabe der relevanten Größen
+	      /*//Eingabe der relevanten Größen
 	      System.out.println("Geben Sie bitte Ihren POP3- Server ein.");
 	      //internetadresse = Eingabe(internetadresse);
 	      pop3 = pop3server.getText();
@@ -283,7 +181,7 @@ public class Aufgabe extends Frame
 
 	      System.out.println("Geben Sie bitte Ihr Passwort ein.");
 	      password = passwort.getText();
-	      System.out.println(password);
+	      System.out.println(password);*/
 	      
 	      try {
 	        
@@ -295,8 +193,8 @@ public class Aufgabe extends Frame
 	        mystore = mysession.getStore("pop3");
 	        
 	        //Verbindungsaufbau zum angegebenen POP3-Server mit dem Username und dem Passwort
-	          mystore.connect(pop3, username, password);
-	          System.out.println("Verbindung hergestellt");
+	          mystore.connect(pop3server.toString(), username.toString(), passwort.toString());
+	          //System.out.println("Verbindung hergestellt");
 	          
 	          //Navigieren in der Baumhierarchie -> Finden des INBOX-Folders 
 	          myfolder=mystore.getDefaultFolder();
@@ -312,6 +210,23 @@ public class Aufgabe extends Frame
 	          laenge = msgs.length;
 	          System.out.println("Anzahl der Nachrichten: " + laenge);
 	          
+	          
+	          
+	          abrufen = new Frame("abrufen");
+	          abrufen.setVisible(true);
+	          //Festlegen des Titels des Fensters
+	          abrufen.setTitle("Daten");
+	          //Fenstergröße einstellen
+	          abrufen.setSize(320,500); //350,100
+	          GridLayout tabelle = new GridLayout (laenge,3);
+	          abrufen.setLayout(tabelle);
+	          
+	          abrufen.add(new Label("Betreff"));
+	          abrufen.add(new Label("Absender"));
+	          abrufen.add(new Label("Button"));
+
+	  		
+	  		
 	          for (int i = 0; i < laenge; i++){
 	            
 	            Message m = msgs[i];
@@ -445,6 +360,6 @@ public class Aufgabe extends Frame
 	public static void main (String args[]) 
 	{
 		//im HP wird ein neuer Frame vom Typ standard erzeugt  
-		new Aufgabe ();
+		new Aufgabe1 ();
 	}
 }

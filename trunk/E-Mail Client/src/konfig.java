@@ -22,9 +22,9 @@ public class konfig {
 	private static String name = "";
 	
 	/**
-	 * Lokale Variable für die Mailadresse
+	 * Lokale Variable für die emailAdressee
 	 */
-	private static String mailadress = "";
+	private static String emailAdresse = "";
 	
 	/**
 	 * Lokale Variable für den Benutzernamen
@@ -32,14 +32,14 @@ public class konfig {
 	private static String username = "";
 	
 	/**
-	 * Lokale Variable für das Password
+	 * Lokale Variable für das passwort
 	 */
-	private static String password = "";
+	private static String passwort = "";
 
 	/**
 	 * Lokale Variable für den POP Server
 	 */
-	private static String popserver = "";
+	private static String pop3server = "";
 	
 	/**
 	 * Lokale Variable für den SMTP Server
@@ -48,24 +48,28 @@ public class konfig {
 		
 	/**
 	 * Speichert die Konfiguration in die Konfigurationsdatei
+	 * @param name
+	 *        Name des Anwenders
+	 * @param emailAdresse
+	 *        emailAdresse
 	 * @param username
-	 *        Benutername
-	 * @param password
-	 *        Password
-	 * @param popserver
+	 *        Benutzername
+	 * @param passwort
+	 *        passwort
+	 * @param pop3server
 	 *        POP Server
 	 * @param smtpserver
 	 *        SMTP Server
 	 */
-	public static void saveToFile(String name, String mailadress, String username, String password, String POPserver, String SMTPserver) {
+	public static void saveToFile(String name, String emailAdresse, String username, String passwort, String pop3server, String SMTPserver) {
 		try {
 			FileWriter file = new FileWriter(fileName);
 			// Daten in die Datei schreiben
 			file.write("name="+name+"\n");
-			file.write("mailadress="+mailadress+"\n");
+			file.write("emailAdresse="+emailAdresse+"\n");
 			file.write("username="+username+"\n");
-			file.write("password="+password+"\n");
-			file.write("popserver="+POPserver+"\n");
+			file.write("passwort="+passwort+"\n");
+			file.write("pop3server="+pop3server+"\n");
 			file.write("smtpserver="+SMTPserver+"\n");
 			file.close();
 		} catch (IOException ioe) {
@@ -94,10 +98,10 @@ public class konfig {
 			}
 			// Strings an die lokalen Variablen übergeben
 			name       = currentLine[0];
-			mailadress = currentLine[1];
+			emailAdresse = currentLine[1];
 			username   = currentLine[2];
-			password   = currentLine[3];
-			popserver  = currentLine[4];
+			passwort   = currentLine[3];
+			pop3server  = currentLine[4];
 			smtpserver = currentLine[5];
 		} catch (IOException ioe) {
 			System.err.println("Fehler beim laden der Konfiguration!");
@@ -115,12 +119,12 @@ public class konfig {
 	}
 	
 	/**
-	 * Gibt die Mailadresse zurück
-	 * @return Mailadresse
+	 * Gibt die emailAdressee zurück
+	 * @return emailAdressee
 	 */
-	public static String getMailAdress() {
+	public static String getemailAdresse() {
 		loadFromFile();
-		return mailadress;
+		return emailAdresse;
 	}
 	
 	/**
@@ -133,21 +137,21 @@ public class konfig {
 	}
 
 	/**
-	 * Gibt das Password zurück
-	 * @return Password
+	 * Gibt das passwort zurück
+	 * @return passwort
 	 */	
-	public static String getPassword() {
+	public static String getpasswort() {
 		loadFromFile();
-		return password;
+		return passwort;
 	}
 	
 	/**
 	 * Gibt den POP Server zurück
 	 * @return POP Server
 	 */
-	public static String getPOPServer() {
+	public static String getpop3server() {
 		loadFromFile();
-		return popserver;
+		return pop3server;
 	}
 	
 	/**
