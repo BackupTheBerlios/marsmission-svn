@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,7 +46,12 @@ public class konfig {
 	 * Lokale Variable für den SMTP Server
 	 */
 	private static String smtpserver = "";
-		
+	
+	public static boolean exists() {
+		File file = new File(fileName);
+		return file.exists();
+	}
+	
 	/**
 	 * Speichert die Konfiguration in die Konfigurationsdatei
 	 * @param name
